@@ -5,11 +5,40 @@ import "../styles/global.css";
 ---
 
 <Layout>
-    <nav>
-        <a href="/about-me">Sobre mi</a>
-        <a href="/projects">Proyectos</a>
-        <a href="/experience">Experiencia</a>
-        <a href="/education">Educación</a>
-        <a href="/contact">Contacto</a>
-    </nav>
+    <main class="container mx-auto">
+        <nav class="flex flex-col font-anton items-center text-2xl uppercase">
+            <ul>
+                <li
+                    class="-rotate-15 translate-y-2 -skew-x-12
+                            hover:scale-150 ease-in-out transition-transform"
+                >
+                    <a href="/about-me"> Sobre mi </a>
+                </li>
+                <li
+                    class="-rotate-10
+                            hover:scale-150 ease-in-out transition-transform"
+                >
+                    <a href="/projects"> Proyectos </a>
+                </li>
+                <li
+                    class="-rotate-3 -translate-y-2 -skew-x-12
+                            hover:scale-150 ease-in-out transition-transform"
+                >
+                    <a href="/experience"> Experiencia </a>
+                </li>
+                <li
+                    class="rotate-5 -translate-y-3 -skew-x-12
+                            hover:scale-150 ease-in-out transition-transform"
+                >
+                    <a href="/education"> Educación </a>
+                </li>
+                <li
+                    class="-rotate-5 -skew-x-12 -translate-y-4
+                            hover:scale-150 ease-in-out transition-transform"
+                >
+                    <a href="/contact"> Contacto </a>
+                </li>
+            </ul>
+        </nav>
+    </main>
 </Layout>
