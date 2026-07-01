@@ -1,10 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+import VideoBg from "../components/video-bg.astro";
+
 import "../styles/global.css";
+import menuVideo from "../assets/video/menu.mp4";
+import menuMobileVideo from "../assets/video/menu-mobile.mp4";
 ---
 
 <Layout>
+    <VideoBg
+        src={menuVideo}
+        mobileSrc={menuMobileVideo}
+        loopStart={9}
+        loopEnd={16}
+        overlay={true}
+    />
     <main class="container mx-auto">
         <nav class="flex flex-col font-anton items-center text-2xl uppercase">
             <ul>
