@@ -1,22 +1,29 @@
-## Development
+# Portfolio
 
-When starting the dev server, use background mode:
+Single-page portfolio site. **Only one real page** (`/` at `src/pages/index.astro`).
 
-```
-astro dev --background
-```
+**Stack**: Astro 7, Tailwind CSS 4, pnpm, Node >=22.12.0
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+## Commands
 
-## Documentation
+| Command | Action |
+|---------|--------|
+| `pnpm dev` | Dev server at `localhost:4321` |
+| `pnpm dev --background` | Dev server in background |
+| `pnpm build` | Production build to `./dist/` |
+| `pnpm preview` | Preview production build |
 
-Full documentation: https://docs.astro.build
+No test, lint, typecheck, or codegen scripts.
 
-Consult these guides before working on related tasks:
+## Conventions
 
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+- **Tailwind 4**: Uses `@import "tailwindcss"` in `global.css` (NOT `@tailwind` directives). Configured via `@tailwindcss/vite` plugin in `astro.config.mjs` — no PostCSS or tailwind.config.
+- **Language**: All UI text is in Spanish.
+- **Route stubs**: `src/constants/pages.ts` defines nav links (`/about-me`, `/projects`, `/experience`, `/education`, `/contact`) but **no page files exist** for those routes yet.
+- **Custom theme**: Defined in `src/styles/global.css` — fonts `font-jetbrains`, `font-sora`, `font-anton`; color scales `primary-*` (cyan), `secondary-*` (blue), `tertiary-*` (red).
+- **No JS framework integrations** (no React, Vue, Svelte, MDX, etc). Only Astro components and vanilla `<script>`.
+- **No environment variables** needed.
+
+## Build artifacts
+
+- `dist/` and `.astro/` are gitignored generated output.
