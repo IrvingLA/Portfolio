@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import VideoBg from "../components/video-bg.astro";
+import "../styles/global.css";
+import menuVideo from "../assets/video/stats.mp4";
+import menuMobileVideo from "../assets/video/stats-mobile.mp4";
+---
+
+<Layout>
+    <VideoBg
+        src={menuVideo}
+        mobileSrc={menuMobileVideo}
+        loopStart={0}
+        loopEnd={20}
+        overlay={true}
+        class="object-left sm:object-center"
+    />
+
+    <main>
+        <div class="grid grid-rows-3">
+            <div
+                class="bg-black text-white font-sora w-64 py-2 flex"
+                style="clip-path: polygon(0 0, 100% 0, 96% 100%, 0% 100%);"
+            >
+                <h2 class="capitalize skew-x-2 text-xl w-28">Sobre mi</h2>
+                <span class="w-0.5 bg-primary-500 rotate-30"></span>
+            </div>
+            <div></div>
+        </div>
+    </main>
+</Layout>
