@@ -18,10 +18,10 @@ const {
 } = Astro.props;
 ---
 
-<div class={`fixed inset-0 -z-10 ${className}`}>
+<div class="fixed inset-0 -z-10">
     <video
         id="bg-video"
-        class="w-full h-full object-cover object-left lg:object-center"
+        class={`w-full h-full object-cover ${className}`}
         autoplay
         muted
         playsinline
