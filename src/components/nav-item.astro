@@ -1,5 +1,6 @@
 ---
 import type { Page } from "../constants/pages";
+import selectSound from "../assets/sounds/select.wav";
 
 interface Props {
     page: Page;
@@ -8,7 +9,10 @@ interface Props {
 const { page } = Astro.props;
 ---
 
-<li class={`group relative w-fit -skew-12 ${page.extraClasses}`}>
+<li
+    data-sound={selectSound}
+    class={`group relative w-fit -skew-12 ${page.extraClasses}`}
+>
     <a
         href={page.href}
         class="relative z-20 block px-3 py-1 group
@@ -38,3 +42,16 @@ const { page } = Astro.props;
     transition-transform duration-300 ease-out group-hover:scale-190"
         style="clip-path: polygon(100% 0, 95% 95%, 0 60%);"></span>
 </li>
+
+<script>
+    const items = document.querySelectorAll<HTMLLIElement>("[data-sound]");
+    items.forEach((li) => {
+        const audio = new Audio(li.dataset.sound!);
+        audio.volume = 0.5;
+        audio.preload = "auto";
+        li.addEventListener("mouseenter", () => {
+            audio.currentTime = 0;
+            audio.play().catch(() => {});
+        });
+    });
+</script>
