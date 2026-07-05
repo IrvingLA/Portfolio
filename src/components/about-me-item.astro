@@ -1,0 +1,72 @@
+---
+import type { Skills } from "../constants/about-me";
+interface Props {
+    skill: Skills;
+}
+
+const { skill } = Astro.props;
+---
+
+<li
+    class="bg-black text-white font-sora w-fit
+                flex items-center px-4 space-x-2
+                group hover:bg-neutral-50 hover:text-black
+                transition-colors ease-in"
+    style="clip-path: polygon(0 0, 100% 0, 98% 100%, 0% 100%);"
+>
+    <div class="relative inline-flex">
+        <img src={skill.urlImage} alt={skill.altImage} class="h-12 sm:w-32" />
+        <div
+            class={`absolute inset-0 mix-blend-color bg-${skill.color}-400/40`}
+            aria-hidden="true"
+        >
+        </div>
+    </div>
+    <h2 class="capitalize skew-x-2 md:text-xl w-28">{skill.title}</h2>
+    <span class="w-0.5 h-10 bg-primary-500 rotate-30" aria-hidden="true">
+    </span>
+    <dl class="-skew-x-12 translate-y-2">
+        <dt class="capitalize font-jetbrains font-bold inline">lv</dt>
+        <dd class="font-jetbrains pt-4 inline">
+            <span class="md:text-2xl">{skill.lv}</span>
+        </dd>
+    </dl>
+    <div class="-skew-x-12 group font-jetbrains">
+        <dl>
+            <dt
+                class="capitalize text-primary-500 group-hover:text-black inline"
+            >
+                hp
+            </dt>
+            <dd
+                class="capitalize text-primary-500 group-hover:text-black inline"
+            >
+                <span class="md:text-2xl">395</span>
+            </dd>
+        </dl>
+        <div
+            class="w-full h-2 bg-primary-500
+                        group-hover:border-black group-hover:border-b-2 group-hover:border-e-2"
+            aria-hidden="true"
+        >
+        </div>
+    </div>
+    <div class="-skew-x-12 group font-jetbrains">
+        <dl>
+            <dt
+                class="capitalize text-amber-300 group-hover:text-black -skew-x-12 inline"
+            >
+                sp
+            </dt>
+            <dd class="capitalize text-amber-300 group-hover:text-black inline">
+                <span class="md:text-2xl">{skill.sp}</span>
+            </dd>
+        </dl>
+        <div
+            class="w-full h-2 bg-amber-300
+                        group-hover:border-black group-hover:border-b-2 group-hover:border-e-2"
+            aria-hidden="true"
+        >
+        </div>
+    </div>
+</li>
