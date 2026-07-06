@@ -22,10 +22,10 @@ import { section } from "../constants/about-me";
         class="object-left sm:object-center"
     />
 
-    <main>
+    <main class="flex items-center h-full">
         <h1 class="sr-only">Sobre mí</h1>
-        <ul>
-            {section.map((sec) => <AboutMeItem skill={sec} />)}
+        <ul class="space-y-1">
+            {section.map((sec) => <AboutMeItem skill={sec} key={sec.title} />)}
         </ul>
     </main>
 </Layout>

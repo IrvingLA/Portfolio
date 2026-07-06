@@ -5,33 +5,44 @@ interface Props {
 }
 
 const { skill } = Astro.props;
+const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
 ---
 
 <li
+    role="button"
+    tabindex="0"
+    aria-haspopup="dialog"
+    data-dialog-trigger
+    data-dialog-id={dialogId}
     class="bg-black text-white font-sora w-fit
                 flex items-center px-4 space-x-2
-                group hover:bg-neutral-50 hover:text-black
-                transition-colors ease-in"
+                group hover:bg-neutral-50 hover:text-black hover:ps-12
+                transition-colors ease-in cursor-pointer"
     style="clip-path: polygon(0 0, 100% 0, 98% 100%, 0% 100%);"
 >
-    <div class="relative inline-flex">
+    <div class="relative inline-flex pointer-events-none">
         <img src={skill.urlImage} alt={skill.altImage} class="h-12 sm:w-32" />
         <div
-            class={`absolute inset-0 mix-blend-color bg-${skill.color}-400/40`}
+            class={`absolute inset-0 mix-blend-color ${skill.color}`}
             aria-hidden="true"
         >
         </div>
     </div>
-    <h2 class="capitalize skew-x-2 md:text-xl w-28">{skill.title}</h2>
-    <span class="w-0.5 h-10 bg-primary-500 rotate-30" aria-hidden="true">
+    <h2 class="capitalize skew-x-2 md:text-xl w-28 pointer-events-none">
+        {skill.title}
+    </h2>
+    <span
+        class="w-0.5 h-10 bg-primary-500 rotate-30 pointer-events-none"
+        aria-hidden="true"
+    >
     </span>
-    <dl class="-skew-x-12 translate-y-2">
+    <dl class="-skew-x-12 translate-y-2 pointer-events-none">
         <dt class="capitalize font-jetbrains font-bold inline">lv</dt>
         <dd class="font-jetbrains pt-4 inline">
             <span class="md:text-2xl">{skill.lv}</span>
         </dd>
     </dl>
-    <div class="-skew-x-12 group font-jetbrains">
+    <div class="-skew-x-12 group font-jetbrains pointer-events-none">
         <dl>
             <dt
                 class="capitalize text-primary-500 group-hover:text-black inline"
@@ -41,7 +52,7 @@ const { skill } = Astro.props;
             <dd
                 class="capitalize text-primary-500 group-hover:text-black inline"
             >
-                <span class="md:text-2xl">395</span>
+                <span class="md:text-2xl">{skill.hp}</span>
             </dd>
         </dl>
         <div
@@ -51,7 +62,7 @@ const { skill } = Astro.props;
         >
         </div>
     </div>
-    <div class="-skew-x-12 group font-jetbrains">
+    <div class="-skew-x-12 group font-jetbrains pointer-events-none">
         <dl>
             <dt
                 class="capitalize text-amber-300 group-hover:text-black -skew-x-12 inline"
@@ -64,9 +75,57 @@ const { skill } = Astro.props;
         </dl>
         <div
             class="w-full h-2 bg-amber-300
-                        group-hover:border-black group-hover:border-b-2 group-hover:border-e-2"
+            group-hover:border-black group-hover:border-b-2 group-hover:border-e-2"
             aria-hidden="true"
         >
         </div>
     </div>
 </li>
+
+<dialog
+    id={dialogId}
+    class="fixed inset-0 z-50 m-0 h-dvh w-dvw max-h-dvh max-w-full
+               bg-black/20 text-white font-sora
+               open:flex open:items-center open:justify-center
+               backdrop:bg-black/70"
+>
+    <button
+        type="button"
+        data-dialog-close
+        class="absolute top-4 right-4 z-10 text-2xl text-primary-500
+                   hover:text-white transition-colors leading-none"
+        aria-label="Cerrar"
+    >
+        ✕
+    </button>
+
+    <slot name="dialog" />
+</dialog>
+
+<script>
+    document.querySelectorAll("[data-dialog-trigger]").forEach((trigger) => {
+        const dialogId = trigger.dataset.dialogId;
+        const dialog = document.getElementById(dialogId);
+        if (!dialog) return;
+
+        const openDialog = () => dialog.showModal();
+
+        trigger.addEventListener("click", openDialog);
+
+        trigger.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openDialog();
+            }
+        });
+
+        dialog.addEventListener("click", (e) => {
+            if (e.target === dialog) dialog.close();
+        });
+
+        const closeBtn = dialog.querySelector("[data-dialog-close]");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => dialog.close());
+        }
+    });
+</script>
