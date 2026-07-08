@@ -23,9 +23,11 @@ import { section } from "../constants/about-me";
     />
 
     <main class="flex items-center h-full">
-        <h1 class="sr-only">Sobre mí</h1>
-        <ul class="space-y-1">
+        <h1 class="sr-only" id="page-heading">Sobre mí</h1>
+        <section aria-labelledby="page-heading">
+            <ul class="space-y-1">
             {section.map((sec) => <AboutMeItem skill={sec} key={sec.title} />)}
-        </ul>
+            </ul>
+        </section>
     </main>
 </Layout>

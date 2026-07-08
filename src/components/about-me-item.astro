@@ -16,9 +16,8 @@ const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
         aria-hidden="true"
     >
     </div>
-    <div
-        role="button"
-        tabindex="0"
+    <button
+        type="button"
         aria-haspopup="dialog"
         data-dialog-trigger
         data-dialog-id={dialogId}
@@ -94,14 +93,24 @@ const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
             >
             </div>
         </div>
-    </div>
-</li>
+    </button></li>
 
 <dialog
     id={dialogId}
     class="dialog-animate inset-0 z-50 m-0 h-dvh w-dvw max-h-dvh max-w-full
                bg-black/20 text-white font-sora relative overflow-hidden"
+    aria-labelledby={`${dialogId}-title`}
 >
+    <form method="dialog" class="absolute top-4 right-4 z-50">
+        <button
+            type="submit"
+            class="bg-red-600 text-white size-10 flex items-center justify-center text-xl
+                   hover:bg-red-700 transition-colors cursor-pointer"
+            aria-label="Cerrar"
+        >
+            ✕
+        </button>
+    </form>
     <div
         class="inset-0 z-0 bg-white border-t-4 border-red-600
         -rotate-8 h-fit w-[120%] py-4 text-black
@@ -112,7 +121,7 @@ const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
             class="w-full h-12 md:h-16 my-2 md:my-4 -skew-x-12 bg-black
         col-start-2 col-span-11 flex items-center px-8 space-x-4 text-white"
         >
-            <h2 class="text-2xl font-anton capitalize -skew-x-6">
+            <h2 id={`${dialogId}-title`} class="text-2xl font-anton capitalize -skew-x-6">
                 {skill.title}
             </h2>
             <dl class="-skew-x-12 translate-y-2 pointer-events-none ps-16">
@@ -218,13 +227,6 @@ const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
         const openDialog = () => dialog.showModal();
 
         trigger.addEventListener("click", openDialog);
-
-        trigger.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                openDialog();
-            }
-        });
 
         dialog.addEventListener("click", (e) => {
             if (e.target === dialog) dialog.close();
