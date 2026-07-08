@@ -7,6 +7,8 @@ import character2 from "../assets/character/yukari-shadow.png";
 import character3 from "../assets/character/junpei-shadow.png";
 
 import AboutMeText from "../components/about-me-text.astro";
+import SoftSkills from "../components/soft-skills.astro";
+import TechnicalSkills from "../components/technical-skills.astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 export interface Skills {
@@ -42,6 +44,7 @@ export const section: Skills[] = [
     hp: 400,
     sp: 280,
     color: "bg-pink-500/50",
+    dialog: TechnicalSkills,
   },
   {
     title: "soft skills",
@@ -52,5 +55,6 @@ export const section: Skills[] = [
     hp: 450,
     sp: 320,
     color: "bg-blue-500/50",
+    dialog: SoftSkills,
   },
 ];

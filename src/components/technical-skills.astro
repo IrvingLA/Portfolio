@@ -1,0 +1,34 @@
+---
+import { technologies } from "../constants/technologies";
+const { class: className = "" } = Astro.props;
+---
+
+<div class={`grid grid-cols-4 gap-2 ${className}`}>
+    {
+        technologies.map((tech) => (
+            <div
+                class="tech-card flex flex-col items-center p-2 rounded-md
+                hover:scale-125 transition-transform ease-in-out duration-300"
+                data-category={tech.category}
+            >
+                <img src={tech.image} alt={tech.name} class="size-8" />
+                <p class="mt-1">{tech.name}</p>
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .tech-card[data-category="frontend"]:hover {
+        background-color: var(--color-primary-400);
+    }
+    .tech-card[data-category="backend"]:hover {
+        background-color: var(--color-secondary-300);
+    }
+    .tech-card[data-category="db"]:hover {
+        background-color: var(--color-tertiary-300);
+    }
+    .tech-card[data-category="tools"]:hover {
+        background-color: var(--color-neutral-400);
+    }
+</style>

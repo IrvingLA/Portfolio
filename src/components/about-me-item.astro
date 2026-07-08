@@ -1,6 +1,5 @@
 ---
 import type { Skills } from "../constants/about-me";
-import AboutMeText from "../components/about-me-text.astro";
 interface Props {
     skill: Skills;
 }
@@ -111,8 +110,57 @@ const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
     >
         <div
             class="w-full h-12 md:h-16 my-2 md:my-4 -skew-x-12 bg-black
-        col-start-2 col-span-11"
+        col-start-2 col-span-11 flex items-center px-8 space-x-4 text-white"
         >
+            <h2 class="text-2xl font-anton capitalize -skew-x-6">
+                {skill.title}
+            </h2>
+            <dl class="-skew-x-12 translate-y-2 pointer-events-none ps-16">
+                <dt class="capitalize font-jetbrains font-bold inline">lv</dt>
+                <dd class="font-jetbrains pt-4 inline">
+                    <span class="md:text-2xl">{skill.lv}</span>
+                </dd>
+            </dl>
+            <div class="-skew-x-12 group font-jetbrains pointer-events-none">
+                <dl>
+                    <dt
+                        class="capitalize text-primary-500 group-hover:text-black inline"
+                    >
+                        hp
+                    </dt>
+                    <dd
+                        class="capitalize text-primary-500 group-hover:text-black inline"
+                    >
+                        <span class="md:text-2xl">{skill.hp}</span>
+                    </dd>
+                </dl>
+                <div
+                    class="w-full h-2 bg-primary-500
+                                        group-hover:border-black group-hover:border-b-2 group-hover:border-e-2"
+                    aria-hidden="true"
+                >
+                </div>
+            </div>
+            <div class="-skew-x-12 group font-jetbrains pointer-events-none">
+                <dl>
+                    <dt
+                        class="capitalize text-amber-300 group-hover:text-black -skew-x-12 inline"
+                    >
+                        sp
+                    </dt>
+                    <dd
+                        class="capitalize text-amber-300 group-hover:text-black inline"
+                    >
+                        <span class="md:text-2xl">{skill.sp}</span>
+                    </dd>
+                </dl>
+                <div
+                    class="w-full h-2 bg-amber-300
+                            group-hover:border-black group-hover:border-b-2 group-hover:border-e-2"
+                    aria-hidden="true"
+                >
+                </div>
+            </div>
         </div>
         {
             skill.dialog && (
@@ -130,8 +178,9 @@ const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
         >
         </div>
     </div>
+    <!-- Image section -->
     <div
-        class="bg-white/5 backdrop-blur-sm border-l border-white/20 absolute right-0 bottom-0 z-10
+        class="bg-gray-600/60 border-l border-white/20 absolute right-0 bottom-0 z-10
         h-1/3 sm:h-1/2 lg:h-full
         w-full lg:w-1/2"
         style="clip-path: polygon(32% 0, 100% 0, 100% 100%, 7% 100%, 0 77%);"
