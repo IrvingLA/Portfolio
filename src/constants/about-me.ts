@@ -1,10 +1,10 @@
-import prota from "../assets/avatars/prota.png";
-import yukari from "../assets/avatars/yukari.png";
-import junpei from "../assets/avatars/junpei.png";
+import protaAvatar from "../assets/avatars/prota.png";
+import yukariAvatar from "../assets/avatars/yukari.png";
+import junpeiAvatar from "../assets/avatars/junpei.png";
 
-import character1 from "../assets/character/prota-shadow.png";
-import character2 from "../assets/character/yukari-shadow.png";
-import character3 from "../assets/character/junpei-shadow.png";
+import protaShadow from "../assets/character/prota-shadow.webp";
+import yukariShadow from "../assets/character/yukari-shadow.webp";
+import junpeiShadow from "../assets/character/junpei-shadow.webp";
 
 import AboutMeText from "../components/about-me-text.astro";
 import SoftSkills from "../components/soft-skills.astro";
@@ -26,8 +26,8 @@ export interface Skills {
 export const section: Skills[] = [
   {
     title: "Sobre mi",
-    urlImage: prota.src,
-    urlCharacter: character1.src,
+    urlImage: protaAvatar.src,
+    urlCharacter: protaShadow.src,
     altImage: "Retrato de Sobre mí",
     lv: 55,
     hp: 550,
@@ -37,8 +37,8 @@ export const section: Skills[] = [
   },
   {
     title: "technical skills",
-    urlImage: yukari.src,
-    urlCharacter: character2.src,
+    urlImage: yukariAvatar.src,
+    urlCharacter: yukariShadow.src,
     altImage: "Retrato de Technical Skills",
     lv: 42,
     hp: 400,
@@ -48,8 +48,8 @@ export const section: Skills[] = [
   },
   {
     title: "soft skills",
-    urlImage: junpei.src,
-    urlCharacter: character3.src,
+    urlImage: junpeiAvatar.src,
+    urlCharacter: junpeiShadow.src,
     altImage: "Retrato de Soft Skills",
     lv: 48,
     hp: 450,
