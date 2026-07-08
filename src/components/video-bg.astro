@@ -37,56 +37,24 @@ const {
 </div>
 
 <script>
-    const video = document.getElementById("bg-video");
+    (() => {
+        const video = document.getElementById("bg-video");
+        if (!video) return;
 
-    // Leemos los valores desde los atributos data-* del elemento HTML
-    const startAttr = video?.dataset.loopStart;
-    const endAttr = video?.dataset.loopEnd;
+        const start = parseFloat(video.dataset.loopStart ?? "0");
+        const end = parseFloat(video.dataset.loopEnd ?? "");
 
-    const LOOP_START = startAttr ? parseFloat(startAttr) : 0;
-    const LOOP_END = endAttr ? parseFloat(endAttr) : undefined;
+        if (isFinite(end) && end > start) {
+            video.addEventListener("timeupdate", () => {
+                if (video.currentTime >= end) {
+                    video.currentTime = start;
+                }
+            });
 
-    if (
-        video &&
-        LOOP_END !== undefined &&
-        isFinite(LOOP_END) &&
-        LOOP_END > LOOP_START
-    ) {
-        let rafId: number | null = null;
-
-        function loop() {
-            if (video.paused || video.ended) return;
-
-            // Si llegamos al punto final del bucle, regresamos al inicio
-            if (video.currentTime >= LOOP_END) {
-                video.currentTime = LOOP_START;
-            }
-            rafId = requestAnimationFrame(loop);
+            video.addEventListener("ended", () => {
+                video.currentTime = start;
+                video.play().catch(() => {});
+            });
         }
-
-        function startLoop() {
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(loop);
-        }
-
-        function stopLoop() {
-            if (rafId) {
-                cancelAnimationFrame(rafId);
-                rafId = null;
-            }
-        }
-
-        // Escuchamos los eventos para controlar el bucle
-        video.addEventListener("play", startLoop);
-        video.addEventListener("pause", stopLoop);
-        video.addEventListener("ended", () => {
-            video.currentTime = LOOP_START;
-            video.play().catch(() => {});
-        });
-
-        // Iniciar si ya está reproduciéndose (caso autoplay)
-        if (!video.paused) {
-            startLoop();
-        }
-    }
+    })();
 </script>
