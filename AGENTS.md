@@ -12,6 +12,7 @@ Personal portfolio site. **Pages**: `/` (`src/pages/index.astro`) and `/about-me
 | `pnpm dev --background` | Dev server in background |
 | `pnpm build` | Production build to `./dist/` |
 | `pnpm preview` | Preview production build |
+| `pnpm astro ...` | Run Astro CLI (`astro add`, `astro check`, etc.) |
 
 No test, lint, typecheck, or codegen scripts.
 
@@ -23,8 +24,12 @@ No test, lint, typecheck, or codegen scripts.
 - **Persona 3 theme**: Custom view transition animations (`::view-transition-old`/`::view-transition-new`) and dialog animations (`.dialog-animate`) in `global.css`. Skill cards use HTML `<dialog>` with `showModal()`.
 - **No JS frameworks**: Only Astro components, vanilla `<script>`, and `astro:transitions` ClientRouter for SPA navigation.
 - **No environment variables** needed.
+- **TypeScript**: Strict mode via `astro/tsconfigs/strict` — type errors block builds.
 - **CLAUDE.md** is an identical duplicate — keep both in sync.
-- **Assets**: All live in `src/assets/` subdirs (`video/`, `sounds/`, `avatars/`, `character/`, `technologies/`) imported via ESM. `video-bg.astro` uses `requestAnimationFrame` with `loopStart`/`loopEnd` data attributes for custom video looping.
+- **Assets**: All live in `src/assets/` subdirs (`video/`, `sounds/`, `avatars/`, `character/`, `technologies/`) imported via ESM. `video-bg.astro` uses `timeupdate`/`ended` events with `loopStart`/`loopEnd` data attributes for custom video looping.
+- **Video files** map to pages: `menu.mp4`/`menu-mobile.mp4` → `/` (`index.astro`); `stats.mp4`/`stats-mobile.mp4` → `/about-me`.
+- **Sound effect convention**: `sound-effect.astro` loads `/sounds/select.mp3` from `public/sounds/` at runtime. Source files also exist in `src/assets/sounds/`. To add/change sounds, update both locations.
+- **Hover sound trigger**: Any element with `data-hover-sound` attribute triggers the menu hover audio via global event delegation in `sound-effect.astro`.
 - **pnpm workspace quirk**: `pnpm-workspace.yaml` sets `allowBuilds: { esbuild: false, sharp: false }` (blocks postinstall scripts; `sharp` is a dep but native build is suppressed) and `minimumReleaseAgeExclude: [astro@7.0.3]` (bypasses supply-chain age gate for pinned version).
 
 ## Build artifacts
