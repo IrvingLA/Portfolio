@@ -1,0 +1,38 @@
+---
+interface Props {
+    lv: number;
+    hp: number;
+    sp: number;
+    large?: boolean;
+    class?: string;
+}
+
+const { lv, hp, sp, class: className = "" } = Astro.props;
+---
+
+<div class={`flex items-center gap-4 ${className}`}>
+    <dl class="-skew-x-12 translate-y-2 pointer-events-none">
+        <dt class="capitalize font-jetbrains font-bold inline">lv</dt>
+        <dd class="font-jetbrains inline">
+            <span class="md:text-2xl">{lv}</span>
+        </dd>
+    </dl>
+    <div class="-skew-x-12 font-jetbrains pointer-events-none">
+        <dl>
+            <dt class="capitalize text-primary-500 inline">hp</dt>
+            <dd class="capitalize text-primary-500 inline">
+                <span class="md:text-2xl">{hp}</span>
+            </dd>
+        </dl>
+        <div class="w-full h-2 bg-primary-500" aria-hidden="true"></div>
+    </div>
+    <div class="-skew-x-12 font-jetbrains pointer-events-none">
+        <dl>
+            <dt class="capitalize text-amber-300 -skew-x-12 inline">sp</dt>
+            <dd class="capitalize text-amber-300 inline">
+                <span class="md:text-2xl">{sp}</span>
+            </dd>
+        </dl>
+        <div class="w-full h-2 bg-amber-300" aria-hidden="true"></div>
+    </div>
+</div>

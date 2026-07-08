@@ -1,0 +1,120 @@
+---
+import type { Skills } from "../constants/about-me";
+import SkillStats from "./skill-stats.astro";
+
+interface Props {
+    skill: Skills;
+    dialogId: string;
+}
+
+const { skill, dialogId } = Astro.props;
+---
+
+<dialog
+    id={dialogId}
+    class="dialog-animate inset-0 z-50 m-0 h-dvh w-dvw max-h-dvh max-w-full
+               bg-black/20 text-white font-sora relative overflow-hidden"
+    aria-labelledby={`${dialogId}-title`}
+>
+    <form method="dialog" class="absolute top-4 right-4 z-50">
+        <button
+            type="submit"
+            class="bg-red-600 text-white size-10 flex items-center justify-center text-xl
+                   hover:bg-red-700 transition-colors cursor-pointer"
+            aria-label="Cerrar"
+        >
+            ✕
+        </button>
+    </form>
+    <div
+        class="inset-0 z-0 bg-white border-t-4 border-red-600
+        -rotate-8 h-fit w-[120%] py-4 text-black
+        -translate-x-10 md:-translate-x-16 lg:-translate-y-12
+        grid grid-cols-12"
+    >
+        <div
+            class="w-full h-12 md:h-16 my-2 md:my-4 -skew-x-12 bg-black
+        col-start-2 col-span-11 flex items-center px-8 space-x-4 text-white"
+        >
+            <h2
+                id={`${dialogId}-title`}
+                class="text-2xl font-anton capitalize -skew-x-6"
+            >
+                {skill.title}
+            </h2>
+            <SkillStats lv={skill.lv} hp={skill.hp} sp={skill.sp} />
+        </div>
+        {
+            skill.dialog && (
+                <skill.dialog
+                    class="font-sora -skew-x-8
+                    text-sm md:text-xl row-start-2
+                 col-start-2 md:col-start-2 lg:col-start-2
+                 col-span-9 sm:col-span-10 md:col-span-9 lg:col-span-4"
+                />
+            )
+        }
+        <div
+            class="w-full h-8 my-4 -skew-x-12 bg-black
+                col-start-2 col-span-11 -translate-x-10 md:-translate-x-20"
+        >
+        </div>
+    </div>
+    <div
+        class="bg-gray-600/60 border-l border-white/20 absolute right-0 bottom-0 z-10
+        h-1/3 sm:h-1/2 lg:h-full
+        w-full lg:w-1/2"
+        style="clip-path: polygon(32% 0, 100% 0, 100% 100%, 7% 100%, 0 77%);"
+    >
+        <div class="relative right-0 bottom-0 h-full">
+            <img
+                src={skill.urlCharacter}
+                alt={skill.altImage}
+                class="size-full object-cover"
+                loading="lazy"
+            />
+            <div
+                class="size-2/5 bg-gray-800 absolute right-0 bottom-0"
+                style="clip-path: polygon(100% 0, 0% 100%, 100% 100%);"
+            >
+            </div>
+        </div>
+        <div
+            class="absolute inset-0 pointer-events-none overflow-hidden"
+            aria-hidden="true"
+        >
+            <div
+                data-shine
+                class="absolute -inset-x-[50%] inset-y-0 w-[200%] bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 crystal-shine"
+            >
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<script define:vars={{ dialogId }}>
+    (() => {
+        const dialog = document.getElementById(dialogId);
+        const trigger = document.querySelector(`[data-dialog-id="${dialogId}"]`);
+        if (!dialog || !trigger) return;
+
+        trigger.addEventListener("click", () => {
+            dialog.showModal();
+            const shine = dialog.querySelector("[data-shine]");
+            if (shine) {
+                shine.classList.remove("crystal-shine");
+                void shine.offsetWidth;
+                shine.classList.add("crystal-shine");
+            }
+        });
+
+        dialog.addEventListener("click", (e) => {
+            if (e.target === dialog) dialog.close();
+        });
+
+        dialog.addEventListener("close", () => {
+            const shine = dialog.querySelector("[data-shine]");
+            if (shine) shine.classList.remove("crystal-shine");
+        });
+    })();
+</script>
