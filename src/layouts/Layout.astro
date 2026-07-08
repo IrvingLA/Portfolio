@@ -1,5 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import SoundEffect from "../components/sound-effect.astro";
+import selectSound from "../assets/sounds/select.mp3";
 ---
 
 <!doctype html>
@@ -16,11 +18,13 @@ import { ClientRouter } from "astro:transitions";
             rel="stylesheet"
         />
         <meta name="description" content="Portafolio personal de Irving Ibarra, desarrollador full-stack" />
+        <meta name="theme-color" content="#002226" />
         <meta name="generator" content={Astro.generator} />
         <ClientRouter />
         <title>Irving Ibarra Portfolio</title>
     </head>
     <body>
+        <SoundEffect src={selectSound} />
         <slot />
     </body>
 </html>
