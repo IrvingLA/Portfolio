@@ -1,23 +1,10 @@
----
-interface Props {
-    src: string;
-}
-
-const { src } = Astro.props;
----
-
-<script define:vars={{ src }}>
-    const { Howl } = await import("howler");
-
-    const howl = new Howl({
-        src: [src],
-        volume: 0.5,
-        preload: true,
-    });
-
+<script is:inline>
     document.addEventListener("mouseenter", (e) => {
         const li = e.target?.closest?.("[data-hover-sound]");
         if (!li) return;
-        howl.play();
+        const audio = new Audio("/sounds/select.mp3");
+        audio.volume = 0.5;
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
     }, true);
 </script>

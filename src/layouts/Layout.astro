@@ -1,7 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import SoundEffect from "../components/sound-effect.astro";
-import selectSound from "../assets/sounds/select.mp3";
 ---
 
 <!doctype html>
@@ -24,7 +23,7 @@ import selectSound from "../assets/sounds/select.mp3";
         <title>Irving Ibarra Portfolio</title>
     </head>
     <body>
-        <SoundEffect src={selectSound} />
+        <SoundEffect />
         <slot />
     </body>
 </html>
