@@ -1,6 +1,7 @@
 export interface Page {
   label: string;
   href: string;
+  /** Clases Tailwind para rotación/posición del nav-item (efecto escalonado) */
   extraClasses: string;
   textColor: string;
 }
