@@ -1,6 +1,5 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import SoundEffect from "./SoundEffect.astro";
 ---
 
 <!doctype html>
@@ -23,7 +22,16 @@ import SoundEffect from "./SoundEffect.astro";
         <title>Irving Ibarra Portfolio</title>
     </head>
     <body>
-        <SoundEffect />
+        <script is:inline>
+            document.addEventListener("mouseenter", (e) => {
+                const li = e.target?.closest?.("[data-hover-sound]");
+                if (!li) return;
+                const audio = new Audio("/sounds/select.mp3");
+                audio.volume = 0.5;
+                audio.currentTime = 0;
+                audio.play().catch(() => {});
+            }, true);
+        </script>
         <slot />
     </body>
 </html>

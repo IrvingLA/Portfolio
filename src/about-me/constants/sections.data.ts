@@ -1,14 +1,14 @@
-import protaAvatar from "./assets/avatars/prota.png";
-import yukariAvatar from "./assets/avatars/yukari.png";
-import junpeiAvatar from "./assets/avatars/junpei.png";
+import protaAvatar from "../assets/avatars/prota.png";
+import yukariAvatar from "../assets/avatars/yukari.png";
+import junpeiAvatar from "../assets/avatars/junpei.png";
 
-import protaShadow from "./assets/character/prota-shadow.webp";
-import yukariShadow from "./assets/character/yukari-shadow.webp";
-import junpeiShadow from "./assets/character/junpei-shadow.webp";
+import protaShadow from "../assets/character/prota-shadow.webp";
+import yukariShadow from "../assets/character/yukari-shadow.webp";
+import junpeiShadow from "../assets/character/junpei-shadow.webp";
 
-import AboutMeText from "./AboutMeText.astro";
-import SoftSkills from "./SoftSkills.astro";
-import TechnicalSkills from "./TechnicalSkills.astro";
+import AboutMeText from "../components/AboutMeText.astro";
+import SoftSkills from "../components/SoftSkills.astro";
+import TechnicalSkills from "../components/TechnicalSkills.astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
 export interface Skills {

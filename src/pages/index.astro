@@ -1,4 +1,38 @@
 ---
-import HomePage from "../navigation/HomePage.astro";
+import Layout from "../shared/components/Layout.astro";
+
+import VideoBg from "../shared/components/VideoBg.astro";
+import NavItem from "../navigation/components/NavItem.astro";
+
+import { pages } from "../navigation/constants/pages.data";
+
+import "../shared/styles/global.css";
+import menuVideo from "../navigation/assets/video/menu.mp4";
+import menuMobileVideo from "../navigation/assets/video/menu-mobile.mp4";
 ---
-<HomePage />
+
+<Layout>
+    <VideoBg
+        src={menuVideo}
+        mobileSrc={menuMobileVideo}
+        loopStart={9}
+        loopEnd={16}
+        overlay={true}
+        class="object-left lg:object-center"
+    />
+    <h1 class="sr-only">Portafolio</h1>
+    <main class="container mx-auto flex h-screen">
+        <nav
+            class="nav-menu flex flex-col font-anton uppercase opacity-0
+            ml-[15%] lg:ml-[calc(50%-2rem)]
+            text-4xl sm:text-5xl
+            pt-[30%] lg:pt-[10%]
+            lg:justify-center"
+            aria-label="Navegación principal"
+        >
+            <ul>
+                {pages.map((page) => <NavItem page={page} key={page.href} />)}
+            </ul>
+        </nav>
+    </main>
+</Layout>

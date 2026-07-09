@@ -1,5 +1,5 @@
 ---
-import type { Skills } from "./sections.data";
+import type { Skills } from "../constants/sections.data";
 import SkillStats from "./SkillStats.astro";
 import SkillDialog from "./SkillDialog.astro";
 
@@ -11,7 +11,7 @@ const { skill } = Astro.props;
 const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
 ---
 
-<li class="relative group w-fit">
+<li data-hover-sound class="relative group w-fit">
     <div
         class="absolute inset-0 pointer-events-none -translate-y-2 translate-x-2
         bg-tertiary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
