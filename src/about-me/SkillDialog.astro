@@ -1,6 +1,6 @@
 ---
-import type { Skills } from "../constants/about-me";
-import SkillStats from "./skill-stats.astro";
+import type { Skills } from "./sections.data";
+import SkillStats from "./SkillStats.astro";
 
 interface Props {
     skill: Skills;
@@ -12,6 +12,7 @@ const { skill, dialogId } = Astro.props;
 
 <dialog
     id={dialogId}
+    data-dialog-id={dialogId}
     class="dialog-animate inset-0 z-50 m-0 h-dvh w-dvw max-h-dvh max-w-full
                bg-black/20 text-white font-sora relative overflow-hidden"
     aria-labelledby={`${dialogId}-title`}
@@ -91,30 +92,3 @@ const { skill, dialogId } = Astro.props;
         </div>
     </div>
 </dialog>
-
-<script define:vars={{ dialogId }}>
-    (() => {
-        const dialog = document.getElementById(dialogId);
-        const trigger = document.querySelector(`[data-dialog-id="${dialogId}"]`);
-        if (!dialog || !trigger) return;
-
-        trigger.addEventListener("click", () => {
-            dialog.showModal();
-            const shine = dialog.querySelector("[data-shine]");
-            if (shine) {
-                shine.classList.remove("crystal-shine");
-                void shine.offsetWidth;
-                shine.classList.add("crystal-shine");
-            }
-        });
-
-        dialog.addEventListener("click", (e) => {
-            if (e.target === dialog) dialog.close();
-        });
-
-        dialog.addEventListener("close", () => {
-            const shine = dialog.querySelector("[data-shine]");
-            if (shine) shine.classList.remove("crystal-shine");
-        });
-    })();
-</script>

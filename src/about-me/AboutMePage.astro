@@ -1,0 +1,61 @@
+---
+import Layout from "../shared/Layout.astro";
+
+import VideoBg from "../shared/VideoBg.astro";
+
+import "../shared/styles/global.css";
+
+import menuVideo from "./assets/video/stats.mp4";
+import menuMobileVideo from "./assets/video/stats-mobile.mp4";
+import AboutMeItem from "./AboutMeItem.astro";
+
+import { section } from "./sections.data";
+---
+
+<Layout>
+    <VideoBg
+        src={menuVideo}
+        mobileSrc={menuMobileVideo}
+        loopStart={0}
+        loopEnd={20}
+        overlay={true}
+        class="object-left sm:object-center"
+    />
+
+    <main class="flex items-center h-full">
+        <h1 class="sr-only" id="page-heading">Sobre mí</h1>
+        <section aria-labelledby="page-heading">
+            <ul class="space-y-1">
+            {section.map((sec) => <AboutMeItem skill={sec} key={sec.title} />)}
+            </ul>
+        </section>
+    </main>
+</Layout>
+
+<script>
+    document.addEventListener("click", (e) => {
+        const trigger = e.target.closest("button[data-dialog-id]");
+        if (!trigger) return;
+        const dialog = document.getElementById(trigger.dataset.dialogId);
+        if (!dialog) return;
+        dialog.showModal();
+        const shine = dialog.querySelector("[data-shine]");
+        if (shine) {
+            shine.classList.remove("crystal-shine");
+            void shine.offsetWidth;
+            shine.classList.add("crystal-shine");
+        }
+    });
+
+    document.addEventListener("click", (e) => {
+        const dialog = e.target.closest("dialog[open]");
+        if (dialog && e.target === dialog) dialog.close();
+    });
+
+    document.addEventListener("close", (e) => {
+        const dialog = e.target;
+        if (!dialog.matches("dialog")) return;
+        const shine = dialog.querySelector("[data-shine]");
+        if (shine) shine.classList.remove("crystal-shine");
+    }, true);
+</script>
