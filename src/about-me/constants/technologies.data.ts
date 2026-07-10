@@ -14,28 +14,29 @@ import Sql from "../assets/technologies/sql.png";
 import Tailwind from "../assets/technologies/tailwind.png";
 import Ts from "../assets/technologies/ts.png";
 import Vuejs from "../assets/technologies/vuejs.png";
+import type { ImageMetadata } from "astro";
 
 export interface Tech {
   name: string;
-  image: string;
+  image: ImageMetadata;
   category: string;
 }
 
 export const technologies: Tech[] = [
-  { name: "Astro JS", category: "frontend", image: AstroJs.src },
-  { name: "Django", category: "backend", image: Django.src },
-  { name: "MySQL", category: "db", image: Mysql.src },
-  { name: "CSS3", category: "frontend", image: Css3.src },
-  { name: "Git", category: "tools", image: Git.src },
-  { name: "HTML", category: "frontend", image: Html.src },
-  { name: "Docker", category: "backend", image: Docker.src },
-  { name: "PostgreSQL", category: "db", image: Postgresql.src },
-  { name: "JavaScript", category: "frontend", image: Js.src },
-  { name: "Linux", category: "tools", image: Linux.src },
-  { name: "TypeScript", category: "frontend", image: Ts.src },
-  { name: "Java", category: "backend", image: Java.src },
-  { name: "SQL", category: "db", image: Sql.src },
-  { name: "Tailwind", category: "frontend", image: Tailwind.src },
-  { name: "Python", category: "backend", image: Python.src },
-  { name: "Vue.js", category: "frontend", image: Vuejs.src },
+  { name: "Astro JS", category: "frontend", image: AstroJs },
+  { name: "Django", category: "backend", image: Django },
+  { name: "MySQL", category: "db", image: Mysql },
+  { name: "CSS3", category: "frontend", image: Css3 },
+  { name: "Git", category: "tools", image: Git },
+  { name: "HTML", category: "frontend", image: Html },
+  { name: "Docker", category: "backend", image: Docker },
+  { name: "PostgreSQL", category: "db", image: Postgresql },
+  { name: "JavaScript", category: "frontend", image: Js },
+  { name: "Linux", category: "tools", image: Linux },
+  { name: "TypeScript", category: "frontend", image: Ts },
+  { name: "Java", category: "backend", image: Java },
+  { name: "SQL", category: "db", image: Sql },
+  { name: "Tailwind", category: "frontend", image: Tailwind },
+  { name: "Python", category: "backend", image: Python },
+  { name: "Vue.js", category: "frontend", image: Vuejs },
 ];

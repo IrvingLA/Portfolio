@@ -10,11 +10,12 @@ import AboutMeText from "../components/AboutMeText.astro";
 import SoftSkills from "../components/SoftSkills.astro";
 import TechnicalSkills from "../components/TechnicalSkills.astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import type { ImageMetadata } from "astro";
 
 export interface Skills {
   title: string;
-  urlImage: string;
-  urlCharacter: string;
+  urlImage: ImageMetadata;
+  urlCharacter: ImageMetadata;
   altImage: string;
   lv: number;
   hp: number;
@@ -26,8 +27,8 @@ export interface Skills {
 export const section: Skills[] = [
   {
     title: "Sobre mi",
-    urlImage: protaAvatar.src,
-    urlCharacter: protaShadow.src,
+    urlImage: protaAvatar,
+    urlCharacter: protaShadow,
     altImage: "Retrato de Sobre mí",
     lv: 55,
     hp: 550,
@@ -37,8 +38,8 @@ export const section: Skills[] = [
   },
   {
     title: "technical skills",
-    urlImage: yukariAvatar.src,
-    urlCharacter: yukariShadow.src,
+    urlImage: yukariAvatar,
+    urlCharacter: yukariShadow,
     altImage: "Retrato de Technical Skills",
     lv: 42,
     hp: 400,
@@ -48,8 +49,8 @@ export const section: Skills[] = [
   },
   {
     title: "soft skills",
-    urlImage: junpeiAvatar.src,
-    urlCharacter: junpeiShadow.src,
+    urlImage: junpeiAvatar,
+    urlCharacter: junpeiShadow,
     altImage: "Retrato de Soft Skills",
     lv: 48,
     hp: 450,

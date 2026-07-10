@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import type { Skills } from "../constants/sections.data";
 import SkillStats from "./SkillStats.astro";
 
@@ -68,11 +69,10 @@ const { skill, dialogId } = Astro.props;
         style="clip-path: polygon(32% 0, 100% 0, 100% 100%, 7% 100%, 0 77%);"
     >
         <div class="relative right-0 bottom-0 h-full">
-            <img
+            <Image
                 src={skill.urlCharacter}
                 alt={skill.altImage}
                 class="size-full object-cover"
-                loading="lazy"
             />
             <div
                 class="size-2/5 bg-gray-800 absolute right-0 bottom-0"

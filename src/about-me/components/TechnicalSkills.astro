@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { technologies } from "../constants/technologies.data";
 const { class: className = "" } = Astro.props;
 ---
@@ -12,7 +13,7 @@ const { class: className = "" } = Astro.props;
                 hover:scale-125 transition-transform ease-in-out duration-300"
                 data-category={tech.category}
             >
-                <img src={tech.image} alt={tech.name} class="size-8" />
+                <Image src={tech.image} alt={tech.name} class="size-8" />
                 <p class="mt-1">{tech.name}</p>
             </div>
         ))

@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import type { Skills } from "../constants/sections.data";
 import SkillStats from "./SkillStats.astro";
 import SkillDialog from "./SkillDialog.astro";
@@ -30,7 +31,7 @@ const dialogId = skill.title.toLowerCase().replace(/\s+/g, "-");
         style="clip-path: polygon(0 0, 100% 0, 98% 100%, 0% 100%);"
     >
         <div class="relative inline-flex pointer-events-none">
-            <img
+            <Image
                 src={skill.urlImage}
                 alt={skill.altImage}
                 class="h-12 sm:w-32"
