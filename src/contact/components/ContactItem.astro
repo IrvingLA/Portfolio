@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import type { Social } from "../constants/socials";
+import SkillStats from "../../about-me/components/SkillStats.astro";
+
+interface Props {
+    social: Social;
+}
+
+const { social } = Astro.props;
+const href = social.url.includes("@") ? `mailto:${social.url}` : social.url;
+const isExternal = href.startsWith("http");
+---
+
+<li data-hover-sound class="relative group w-fit">
+    <div
+        class="absolute inset-0 pointer-events-none -translate-y-2 translate-x-2
+        bg-tertiary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+        style="clip-path: polygon(0 20%, 100% 0, 98% 100%, 0% 100%);"
+        aria-hidden="true"
+    >
+    </div>
+    <a
+        href={href}
+        target={isExternal ? "_blank" : null}
+        rel={isExternal ? "noopener noreferrer" : null}
+        class="bg-black text-white font-sora w-fit
+                    flex items-center px-4 space-x-2
+                    hover:bg-neutral-50 hover:text-black hover:ps-12
+                    transition-colors ease-in cursor-pointer relative z-10 no-underline"
+        style="clip-path: polygon(0 0, 100% 0, 98% 100%, 0% 100%);"
+    >
+        <div class="relative inline-flex pointer-events-none">
+            <Image
+                src={social.image}
+                alt={social.alt}
+                class="h-12 sm:w-32"
+            />
+            <div
+                class={`absolute inset-0 mix-blend-color ${social.color}`}
+                aria-hidden="true"
+            >
+            </div>
+        </div>
+        <h2 class="capitalize skew-x-2 md:text-xl w-28 pointer-events-none">
+            {social.name}
+        </h2>
+        <span
+            class="w-0.5 h-10 bg-primary-500 rotate-30 pointer-events-none"
+            aria-hidden="true"
+        >
+        </span>
+        <SkillStats lv={social.lv} hp={social.hp} sp={social.sp} />
+    </a>
+</li>
