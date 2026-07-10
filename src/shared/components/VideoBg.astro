@@ -37,7 +37,7 @@ const {
 </div>
 
 <script>
-    (() => {
+    document.addEventListener("astro:page-load", () => {
         const video = document.getElementById("bg-video");
         if (!video) return;
 
@@ -56,5 +56,5 @@ const {
                 video.play().catch(() => {});
             });
         }
-    })();
+    });
 </script>
