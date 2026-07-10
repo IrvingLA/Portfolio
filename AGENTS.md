@@ -12,9 +12,10 @@ Personal portfolio (Irving Ibarra). **Scream Architecture** — business domains
 | `pnpm dev --background` | Dev server in background |
 | `pnpm build` | Production build to `./dist/` |
 | `pnpm preview` | Preview production build |
-| `pnpm astro ...` | Astro CLI (`astro add`, `astro check`, etc.) |
+| `pnpm check` | `astro check` — type-check `.astro` files |
+| `pnpm astro ...` | Astro CLI (`astro add`, etc.) |
 
-No test, lint, typecheck, or codegen scripts.
+No test, lint, or codegen scripts.
 
 ## Architecture
 
@@ -23,10 +24,10 @@ src/
 ├── pages/             # Thin routing layer — page .astro files only
 ├── navigation/        # Home page domain
 ├── about-me/          # "Sobre mí" page domain
-├── projects/          # (future)
-├── experience/        # (future)
-├── education/         # (future)
-├── contact/           # (future)
+├── contact/           # Contacto page domain
+├── projects/          # (empty — future)
+├── experience/        # (empty — future)
+├── education/         # (empty — future)
 └── shared/            # Cross-cutting: Layout, VideoBg, styles, assets
 ```
 
@@ -46,8 +47,8 @@ Each domain owns its `components/`, `constants/`, and `assets/`. Pages import fr
 - **Hover sound**: Any element with `data-hover-sound` triggers `select.mp3` via a `mouseenter` event delegation listener in `Layout.astro` (`<script is:inline>`).
 - **Dialog modal sounds**: Page-level `<script>` in `about-me.astro` plays `open-modal.mp3` on `<button data-dialog-id>` click and `hide-modal.mp3` on `<dialog>` close event.
 - **CLAUDE.md**: Must remain an identical duplicate of this file.
-- **pnpm workspace quirk**: `pnpm-workspace.yaml` sets `allowBuilds: { esbuild: false, sharp: false }` (blocks postinstall scripts; `sharp` is a dep but native build suppressed) and `minimumReleaseAgeExclude: [astro@7.0.3]` (bypasses supply-chain age gate).
-- **`pages.data.ts`**: Defines 5 routes (`/about-me`, `/projects`, `/experience`, `/education`, `/contact`) but only `/` and `/about-me` have actual page files. The remaining are future placeholders.
+- **pnpm workspace quirk**: `pnpm-workspace.yaml` sets `allowBuilds: { esbuild: false, sharp: true }` (blocks esbuild postinstall; sharp allowed but native build suppressed) and `minimumReleaseAgeExclude: [astro@7.0.3]` (bypasses supply-chain age gate).
+- **`src/navigation/constants/pages.data.ts`**: Defines 5 routes (`/about-me`, `/projects`, `/experience`, `/education`, `/contact`). Pages exist for `/`, `/about-me`, and `/contact`; the rest are future placeholders.
 
 ## Build artifacts
 
