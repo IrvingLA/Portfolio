@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+import type { Education } from "../constants/education";
+
+interface Props {
+    item: Education;
+}
+
+const { item } = Astro.props;
+---
+
+<li class="relative group w-fit" data-hover-sound>
+    <div
+        class="absolute inset-0 pointer-events-none -translate-y-2 translate-x-2
+        bg-tertiary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+        style="clip-path: polygon(0 20%, 100% 0, 98% 100%, 0% 100%);"
+        aria-hidden="true"
+    >
+    </div>
+    <button
+        type="button"
+        aria-haspopup="dialog"
+        class="bg-black text-white font-sora w-fit
+            flex items-center px-16 space-x-2
+            hover:bg-neutral-50 hover:text-black hover:ps-12
+            transition-colors ease-in cursor-pointer relative z-10"
+        style="clip-path: polygon(0 0, 100% 0, 98% 100%, 0% 100%);"
+    >
+        <div class="relative inline-flex pointer-events-none">
+            <Image src={item.avatar} alt={item.alt} class="h-12 sm:w-32" />
+            <div
+                class={`absolute inset-0 mix-blend-color ${item.color}`}
+                aria-hidden="true"
+            >
+            </div>
+        </div>
+        <h2 class="capitalize skew-x-2 md:text-xl w-28 pointer-events-none">
+            {item.name}
+        </h2>
+    </button>
+</li>
