@@ -31,11 +31,7 @@ const isExternal = href.startsWith("http");
         style="clip-path: polygon(0 0, 100% 0, 98% 100%, 0% 100%);"
     >
         <div class="relative inline-flex pointer-events-none">
-            <Image
-                src={social.image}
-                alt={social.alt}
-                class="h-12 sm:w-32"
-            />
+            <Image src={social.image} alt={social.alt} class="h-12 sm:w-32" />
             <div
                 class={`absolute inset-0 mix-blend-color ${social.color}`}
                 aria-hidden="true"
