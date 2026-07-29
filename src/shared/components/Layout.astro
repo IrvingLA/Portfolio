@@ -23,13 +23,16 @@ import { ClientRouter } from "astro:transitions";
     </head>
     <body>
         <script is:inline>
-            document.addEventListener("mouseenter", (e) => {
-                const li = e.target?.closest?.("[data-hover-sound]");
-                if (!li) return;
-                const audio = new Audio("/sounds/select.mp3");
-                audio.volume = 0.5;
-                audio.currentTime = 0;
-                audio.play().catch(() => {});
+            const hoverAudio = new Audio("/sounds/select.mp3");
+            hoverAudio.volume = 0.5;
+
+            document.addEventListener("mouseover", (e) => {
+                const el = e.target?.closest?.("[data-hover-sound]");
+                if (!el) return;
+                const related = e.relatedTarget;
+                if (related && el.contains(related)) return;
+                hoverAudio.currentTime = 0;
+                hoverAudio.play().catch(() => {});
             }, true);
         </script>
         <slot />
