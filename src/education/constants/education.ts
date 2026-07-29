@@ -1,9 +1,9 @@
 import type { ImageMetadata } from "astro";
 
-import Akihiko from "../assets/avatars/akihiko.png"
-import Mitsuri from "../assets/avatars/mitsuri.png"
-import Rapier from "../assets/weapons/rapier.png"
-import Fist from "../assets/weapons/fist.png"
+import Akihiko from "../assets/avatars/akihiko.png";
+import Mitsuri from "../assets/avatars/mitsuri.png";
+import Rapier from "../assets/weapons/rapier.png";
+import Fist from "../assets/weapons/fist.png";
 
 interface Achievement {
   date: string;
@@ -32,18 +32,19 @@ export const Educations: Education[] = [
     avatar: Akihiko,
     alt: "Imagen para educacion",
     color: "bg-gray-500/90",
-    weapons: [{
-
-      name: "Ing. en Sistemas Computacionales",
-      atk: 410,
-      acc: 98,
-      image: Fist,
-      achievement:
+    weapons: [
       {
-        date: "2026",
-        description: "Finalice mi carrera en el Instituto Tecnologico Superior de Fresnillo (ITSF)"
-      }
-    }],
+        name: "Ing. en Sistemas",
+        atk: 410,
+        acc: 98,
+        image: Fist,
+        achievement: {
+          date: "2026",
+          description:
+            "Finalice mi carrera en el Instituto Tecnologico Superior de Fresnillo (ITSF)",
+        },
+      },
+    ],
   },
   {
     name: "Certificaciones",
@@ -58,8 +59,8 @@ export const Educations: Education[] = [
         image: Rapier,
         achievement: {
           date: "Junio 2026",
-          description: "DataCamp"
-        }
+          description: "DataCamp",
+        },
       },
       {
         name: "Intermediate Python",
@@ -68,8 +69,8 @@ export const Educations: Education[] = [
         image: Rapier,
         achievement: {
           date: "Junio 2026",
-          description: "DataCamp"
-        }
+          description: "DataCamp",
+        },
       },
       {
         name: "Prompting Responsable",
@@ -78,9 +79,9 @@ export const Educations: Education[] = [
         image: Rapier,
         achievement: {
           date: "Octubre 2025",
-          description: "Santander Open Academy"
-        }
+          description: "Santander Open Academy",
+        },
       },
-    ]
-  }
-]
+    ],
+  },
+];

@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import type { Education } from "../constants/education";
+
+interface Props {
+    item: Education;
+}
+
+const { item } = Astro.props;
+---
+
+<div>
+    <div
+        class="flex items-center"
+        style="clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);"
+    >
+        <div class="relative inline-flex pointer-events-none bg-black ps-12">
+            <Image
+                src={item.avatar}
+                alt={item.alt}
+                class="h-16 w-40"
+            />
+            <div
+                class={`absolute inset-0 mix-blend-color ${item.color}`}
+                aria-hidden="true"
+            >
+            </div>
+        </div>
+        <span
+            class="bg-white font-jetbrains font-bold text-lg -translate-x-28
+                        w-56 h-16 flex items-center justify-center"
+            style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 25% 100%, 0 40%);"
+        >
+            <h2>{item.name}</h2>
+        </span>
+    </div>
+    {
+        item.weapons.map((weapon) => (
+            <div class="grid grid-cols-12 ps-12 font-jetbrains font-bold text-lg justify-evenly mb-1">
+                <div class="flex col-span-6">
+                    <Image
+                        src={weapon.image}
+                        alt={weapon.name}
+                        class="h-auto w-16"
+                    />
+                    <h3>{weapon.name}</h3>
+                </div>
+                <p>{weapon.atk}</p>
+                <p>{weapon.acc}</p>
+                <span class="bg-black text-white w-16 text-center rounded-2xl flex justify-evenly">
+                    <p>x</p>
+                    <p>1</p>
+                </span>
+            </div>
+        ))
+    }
+</div>
