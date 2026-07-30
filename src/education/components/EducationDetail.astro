@@ -12,7 +12,7 @@ interface Props {
 const { item, id } = Astro.props;
 ---
 
-<div class="w-3/4 hidden" data-edu-detail={id}>
+<div class="w-3/4 hidden" data-edu-detail={id} role="region" aria-label={item.name}>
     <div
         style="clip-path: polygon(0 0, 100% 0%, 98% 100%, 0% 100%);"
         class="mb-8"
@@ -48,7 +48,7 @@ const { item, id } = Astro.props;
                     class="h-4 w-10"
                     data-current-weapon
                 />
-                <h2 data-current-name>{item.weapons[0].name}</h2>
+                <h3 data-current-name>{item.weapons[0].name}</h3>
             </div>
             <div class="-translate-y-4">
                 <Image
@@ -87,7 +87,7 @@ const { item, id } = Astro.props;
                         alt={weapon.name}
                         class="h-4 w-10"
                     />
-                    <h3>{weapon.name}</h3>
+                    <h4>{weapon.name}</h4>
                 </div>
                 <p>{weapon.atk}</p>
                 <p>{weapon.acc}</p>

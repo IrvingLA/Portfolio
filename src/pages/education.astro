@@ -24,7 +24,7 @@ import { Educations } from "../education/constants/education";
     />
 
     <main class="flex items-center h-full">
-        <h1 class="sr-only" id="page-heading">Contacto</h1>
+        <h1 class="sr-only" id="page-heading">Educación</h1>
         <section id="education-list" aria-labelledby="page-heading">
             <ul class="space-y-1">
                 {Educations.map((item, i) => <EducationItem item={item} id={`edu-${i}`} />)}
@@ -39,10 +39,18 @@ import { Educations } from "../education/constants/education";
             <EducationDetail item={Educations[1]} id="edu-1" />
         </div>
     </main>
+    <a
+        href="/"
+        data-hover-sound
+        class="fixed top-4 left-4 z-40 font-anton uppercase text-primary-800
+               hover:text-primary-950 transition-colors text-lg"
+    >
+        Menú
+    </a>
     <button
         id="btn-volver"
         data-hover-sound
-        class="fixed top-4 left-4 z-40 hidden font-anton uppercase text-primary-800
+        class="fixed top-4 right-4 z-40 hidden font-anton uppercase text-primary-800
                hover:text-primary-950 transition-colors text-lg cursor-pointer"
         aria-label="Volver"
     >
@@ -68,6 +76,8 @@ import { Educations } from "../education/constants/education";
                 volver.classList.add("hidden");
                 openId = null;
                 closing = false;
+                const btn = document.querySelector(`[data-edu-id="${id}"] button`);
+                if (btn) btn.setAttribute("aria-expanded", "false");
                 new Audio("/sounds/hide-modal.mp3").play().catch(() => {});
             }, { once: true });
         };
@@ -88,6 +98,7 @@ import { Educations } from "../education/constants/education";
                 detail.classList.add("p3r-slide-in");
                 volver.classList.remove("hidden");
                 openId = id;
+                trigger.setAttribute("aria-expanded", "true");
                 new Audio("/sounds/open-modal.mp3").play().catch(() => {});
             };
 
