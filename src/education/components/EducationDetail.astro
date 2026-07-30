@@ -1,53 +1,97 @@
 ---
 import { Image } from "astro:assets";
 import type { Education } from "../constants/education";
+import Attack from "../assets/weapons/attack.png";
+import Accuracy from "../assets/weapons/accuracy.png";
 
 interface Props {
     item: Education;
+    id: string;
 }
 
-const { item } = Astro.props;
+const { item, id } = Astro.props;
 ---
 
-<div>
+<div class="w-3/4 hidden" data-edu-detail={id}>
     <div
-        class="flex items-center"
-        style="clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);"
+        style="clip-path: polygon(0 0, 100% 0%, 98% 100%, 0% 100%);"
+        class="mb-8"
     >
-        <div class="relative inline-flex pointer-events-none bg-black ps-12">
-            <Image
-                src={item.avatar}
-                alt={item.alt}
-                class="h-16 w-40"
-            />
+        <div class="flex items-center">
             <div
-                class={`absolute inset-0 mix-blend-color ${item.color}`}
-                aria-hidden="true"
+                class="relative inline-flex pointer-events-none bg-black ps-12"
             >
+                <Image src={item.avatar} alt={item.alt} class="h-16 w-40" />
+                <div
+                    class={`absolute inset-0 mix-blend-color ${item.color}`}
+                    aria-hidden="true"
+                >
+                </div>
+            </div>
+            <span
+                class="bg-white font-jetbrains font-bold text-lg -translate-x-28
+                        w-56 h-16 flex items-center justify-center"
+                style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 25% 100%, 0 40%);"
+            >
+                <h2>{item.name}</h2>
+            </span>
+        </div>
+        <div
+            class="w-full h-10 bg-black ps-12
+            grid grid-cols-8 gap-8
+            font-jetbrains font-bold text-xl text-white"
+        >
+            <div class="flex items-center col-span-5">
+                <img
+                    src={item.weapons[0].image.src}
+                    alt={item.weapons[0].name}
+                    class="h-4 w-10"
+                    data-current-weapon
+                />
+                <h2 data-current-name>{item.weapons[0].name}</h2>
+            </div>
+            <div class="-translate-y-4">
+                <Image
+                    src={Attack}
+                    alt="attack"
+                    class="-translate-x-4 translate-y-1 h-5 w-auto"
+                />
+                <p data-current-atk>{item.weapons[0].atk}</p>
+            </div>
+            <div class="-translate-y-4">
+                <Image
+                    src={Accuracy}
+                    alt="accuracy"
+                    class="-translate-x-5 translate-y-1 h-5 w-auto"
+                />
+                <p data-current-acc>{item.weapons[0].acc}</p>
             </div>
         </div>
-        <span
-            class="bg-white font-jetbrains font-bold text-lg -translate-x-28
-                        w-56 h-16 flex items-center justify-center"
-            style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 25% 100%, 0 40%);"
-        >
-            <h2>{item.name}</h2>
-        </span>
     </div>
     {
         item.weapons.map((weapon) => (
-            <div class="grid grid-cols-12 ps-12 font-jetbrains font-bold text-lg justify-evenly mb-1">
-                <div class="flex col-span-6">
+            <div
+                class="grid grid-cols-8 gap-8 ps-12 pe-12 py-1
+            font-jetbrains font-bold text-lg mb-1 cursor-pointer
+            border-t-4 border-e-2 border-transparent
+            hover:border-tertiary-600 hover:rounded-e-md
+            transition-all duration-300 ease-out"
+                data-weapon-img={weapon.image.src}
+                data-weapon-name={weapon.name}
+                data-weapon-atk={weapon.atk}
+                data-weapon-acc={weapon.acc}
+            >
+                <div class="flex col-span-5 items-center">
                     <Image
                         src={weapon.image}
                         alt={weapon.name}
-                        class="h-auto w-16"
+                        class="h-4 w-10"
                     />
                     <h3>{weapon.name}</h3>
                 </div>
                 <p>{weapon.atk}</p>
                 <p>{weapon.acc}</p>
-                <span class="bg-black text-white w-16 text-center rounded-2xl flex justify-evenly">
+                <span class="bg-black text-white w-16 text-center rounded-2xl flex justify-evenly font-normal text-sm items-center">
                     <p>x</p>
                     <p>1</p>
                 </span>
@@ -55,3 +99,33 @@ const { item } = Astro.props;
         ))
     }
 </div>
+
+<script>
+    document.addEventListener("click", (e) => {
+        const row = e.target.closest("[data-weapon-img]");
+        if (!row) return;
+
+        const detail = row.closest("[data-edu-detail]");
+        if (!detail) return;
+
+        const img = row.dataset.weaponImg;
+        const name = row.dataset.weaponName;
+        const atk = row.dataset.weaponAtk;
+        const acc = row.dataset.weaponAcc;
+
+        const weapon = detail.querySelector("[data-current-weapon]");
+        const curName = detail.querySelector("[data-current-name]");
+        const curAtk = detail.querySelector("[data-current-atk]");
+        const curAcc = detail.querySelector("[data-current-acc]");
+
+        if (weapon) {
+            weapon.src = img;
+            weapon.alt = name;
+        }
+        if (curName) curName.textContent = name;
+        if (curAtk) curAtk.textContent = atk;
+        if (curAcc) curAcc.textContent = acc;
+
+        new Audio("/sounds/select.mp3").play().catch(() => {});
+    });
+</script>

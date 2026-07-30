@@ -4,12 +4,13 @@ import type { Education } from "../constants/education";
 
 interface Props {
     item: Education;
+    id: string;
 }
 
-const { item } = Astro.props;
+const { item, id } = Astro.props;
 ---
 
-<li class="relative group w-fit" data-hover-sound>
+<li class="relative group w-fit" data-hover-sound data-edu-id={id}>
     <div
         class="absolute inset-0 pointer-events-none -translate-y-2 translate-x-2
         bg-tertiary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-400"

@@ -7,6 +7,7 @@ import Education from "../education/assets/videos/compressed.mp4";
 import Mobile from "../education/assets/videos/mobile.mp4";
 
 import EducationItem from "../education/components/EducationItem.astro";
+import EducationDetail from "../education/components/EducationDetail.astro";
 import "../shared/styles/global.css";
 
 import { Educations } from "../education/constants/education";
@@ -24,10 +25,112 @@ import { Educations } from "../education/constants/education";
 
     <main class="flex items-center h-full">
         <h1 class="sr-only" id="page-heading">Contacto</h1>
-        <section aria-labelledby="page-heading">
+        <section id="education-list" aria-labelledby="page-heading">
             <ul class="space-y-1">
-                {Educations.map((item) => <EducationItem item={item} />)}
+                {Educations.map((item, i) => <EducationItem item={item} id={`edu-${i}`} />)}
             </ul>
         </section>
+        <!-- Education section -->
+        <div>
+            <EducationDetail item={Educations[0]} id="edu-0" />
+        </div>
+        <!-- Certification section -->
+        <div>
+            <EducationDetail item={Educations[1]} id="edu-1" />
+        </div>
     </main>
+    <button
+        id="btn-volver"
+        data-hover-sound
+        class="fixed top-4 left-4 z-40 hidden font-anton uppercase text-primary-800
+               hover:text-primary-950 transition-colors text-lg cursor-pointer"
+        aria-label="Volver"
+    >
+        Volver
+    </button>
 </Layout>
+
+<script>
+    (() => {
+        const section = document.getElementById("education-list");
+        const volver = document.getElementById("btn-volver");
+        let openId = null;
+        let closing = false;
+
+        const closeDetail = (detail, id) => {
+            closing = true;
+            detail.classList.remove("p3r-slide-in");
+            detail.classList.add("p3r-slide-out");
+            detail.addEventListener("animationend", () => {
+                detail.classList.add("hidden");
+                detail.classList.remove("p3r-slide-out");
+                section.classList.remove("hidden");
+                volver.classList.add("hidden");
+                openId = null;
+                closing = false;
+                new Audio("/sounds/hide-modal.mp3").play().catch(() => {});
+            }, { once: true });
+        };
+
+        document.addEventListener("click", (e) => {
+            const trigger = e.target.closest("[data-edu-id] button");
+            if (!trigger) return;
+            if (closing) return;
+
+            const id = trigger.closest("[data-edu-id]").dataset.eduId;
+
+            const openDetail = () => {
+                const detail = document.querySelector(`[data-edu-detail="${id}"]`);
+                if (!detail) return;
+                section.classList.add("hidden");
+                detail.classList.remove("hidden", "p3r-slide-out");
+                void detail.offsetWidth;
+                detail.classList.add("p3r-slide-in");
+                volver.classList.remove("hidden");
+                openId = id;
+                new Audio("/sounds/open-modal.mp3").play().catch(() => {});
+            };
+
+            if (openId !== null && openId !== id) {
+                closing = true;
+                const prev = document.querySelector(`[data-edu-detail="${openId}"]`);
+                if (prev) {
+                    prev.classList.remove("p3r-slide-in");
+                    prev.classList.add("p3r-slide-out");
+                    prev.addEventListener("animationend", () => {
+                        prev.classList.add("hidden");
+                        prev.classList.remove("p3r-slide-out");
+                        openId = null;
+                        closing = false;
+                        openDetail();
+                    }, { once: true });
+                    return;
+                }
+            }
+
+            if (openId === id) return;
+
+            openDetail();
+        });
+
+        document.addEventListener("click", (e) => {
+            const trigger = e.target.closest("[data-edu-detail]");
+            if (!trigger) return;
+            if (closing) return;
+
+            if (e.target.closest("[data-weapon-img]")) return;
+
+            const id = trigger.dataset.eduDetail;
+            if (!id || openId !== id) return;
+
+            closeDetail(trigger, id);
+        });
+
+        volver.addEventListener("click", () => {
+            if (!openId || closing) return;
+            const detail = document.querySelector(`[data-edu-detail="${openId}"]`);
+            if (!detail) return;
+            closeDetail(detail, openId);
+        });
+    })();
+</script>
