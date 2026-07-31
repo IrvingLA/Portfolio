@@ -12,7 +12,12 @@ interface Props {
 const { item, id } = Astro.props;
 ---
 
-<div class="w-3/4 hidden" data-edu-detail={id} role="region" aria-label={item.name}>
+<div
+    class="w-full md:w-3/4 hidden"
+    data-edu-detail={id}
+    role="region"
+    aria-label={item.name}
+>
     <div
         style="clip-path: polygon(0 0, 100% 0%, 98% 100%, 0% 100%);"
         class="mb-8"
@@ -39,7 +44,8 @@ const { item, id } = Astro.props;
         <div
             class="w-full h-10 bg-black ps-12
             grid grid-cols-8 gap-8
-            font-jetbrains font-bold text-xl text-white"
+            font-jetbrains font-bold text-white
+            text-sm sm:text-xl"
         >
             <div class="flex items-center col-span-5">
                 <img
@@ -72,7 +78,8 @@ const { item, id } = Astro.props;
         item.weapons.map((weapon) => (
             <div
                 class="grid grid-cols-8 gap-8 ps-12 pe-12 py-1
-            font-jetbrains font-bold text-lg mb-1 cursor-pointer
+            font-jetbrains font-bold mb-1 cursor-pointer
+            text-sm md:text-lg
             border-t-4 border-e-2 border-transparent
             hover:border-tertiary-600 hover:rounded-e-md
             transition-all duration-300 ease-out"
