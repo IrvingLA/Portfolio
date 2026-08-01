@@ -77,12 +77,15 @@ const { item, id } = Astro.props;
     {
         item.weapons.map((weapon) => (
             <div
-                class="grid grid-cols-8 gap-8 ps-12 pe-12 py-1
-            font-jetbrains font-bold mb-1 cursor-pointer
-            text-sm md:text-lg
-            border-t-4 border-e-2 border-transparent
-            hover:border-tertiary-600 hover:rounded-e-md
-            transition-all duration-300 ease-out"
+                data-hover-sound
+                class=" bg-blue-950 hover:bg-neutral-50
+                grid grid-cols-8 gap-8
+                ps-12 pe-12 py-1 mb-1 cursor-pointer
+                font-jetbrains font-bold text-white hover:text-black
+                text-sm md:text-lg
+                border-t-4 border-e-2 border-transparent
+                hover:border-tertiary-600 rounded-e-md
+                transition-all duration-300 ease-out"
                 data-weapon-img={weapon.image.src}
                 data-weapon-name={weapon.name}
                 data-weapon-atk={weapon.atk}
@@ -133,6 +136,6 @@ const { item, id } = Astro.props;
         if (curAtk) curAtk.textContent = atk;
         if (curAcc) curAcc.textContent = acc;
 
-        new Audio("/sounds/select.mp3").play().catch(() => {});
+        new Audio("/sounds/open-modal.mp3").play().catch(() => {});
     });
 </script>

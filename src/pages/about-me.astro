@@ -37,6 +37,7 @@ import { section } from "../about-me/constants/sections.data";
     <a
         href="/"
         data-hover-sound
+        data-open-sound
         class="fixed top-4 left-4 z-40 font-anton uppercase text-primary-800
                hover:text-primary-950 transition-colors text-lg"
     >
@@ -45,6 +46,12 @@ import { section } from "../about-me/constants/sections.data";
 </Layout>
 
 <script>
+    document.addEventListener("click", (e) => {
+        const trigger = e.target.closest("a[data-open-sound]");
+        if (!trigger) return;
+        new Audio("/sounds/open-modal.mp3").play().catch(() => {});
+    });
+
     document.addEventListener("click", (e) => {
         const trigger = e.target.closest("button[data-dialog-id]");
         if (!trigger) return;
