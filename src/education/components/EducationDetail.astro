@@ -1,8 +1,12 @@
 ---
 import { Image } from "astro:assets";
-import type { Education } from "../constants/education";
+
 import Attack from "../assets/weapons/attack.png";
 import Accuracy from "../assets/weapons/accuracy.png";
+
+import EducationDescription from "./EducationDescription.astro";
+
+import type { Education } from "../constants/education";
 
 interface Props {
     item: Education;
@@ -78,7 +82,7 @@ const { item, id } = Astro.props;
         item.weapons.map((weapon) => (
             <div
                 data-hover-sound
-                class=" bg-blue-950 hover:bg-neutral-50
+                class=" bg-secondary-900 hover:bg-neutral-50
                 grid grid-cols-8 gap-8
                 ps-12 pe-12 py-1 mb-1 cursor-pointer
                 font-jetbrains font-bold text-white hover:text-black
@@ -108,8 +112,11 @@ const { item, id } = Astro.props;
             </div>
         ))
     }
+    <EducationDescription
+        achievement={item.weapons[0].achievement}
+        class="mt-8 ps-12"
+    />
 </div>
-
 <script>
     document.addEventListener("click", (e) => {
         const row = e.target.closest("[data-weapon-img]");

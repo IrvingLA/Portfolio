@@ -1,0 +1,30 @@
+---
+import type { Achievement } from "../constants/education";
+
+interface Props {
+    achievement: Achievement;
+    class?: string;
+}
+
+const { achievement, class: className } = Astro.props;
+---
+
+<div
+    class={`bg-secondary-900/90 font-bold font-jetbrains text-primary-600 py-4 ${className}`}
+>
+    <div class="flex mb-2">
+        <div class="bg-primary-600 px-4 rounded-md me-2">
+            <p class="capitalize text-secondary-800 font-sora">effect</p>
+        </div>
+        <p>{achievement.effect}</p>
+    </div>
+    <div class="flex flex-wrap ps-7">
+        <div class="me-2">
+            <p class="capitalize border rounded-2xl px-2 text-sm">info</p>
+        </div>
+        <div>
+            <p>{achievement.date}</p>
+            <p>{achievement.description}</p>
+        </div>
+    </div>
+</div>

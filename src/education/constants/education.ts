@@ -5,7 +5,8 @@ import Mitsuri from "../assets/avatars/mitsuri.png";
 import Rapier from "../assets/weapons/rapier.png";
 import Fist from "../assets/weapons/fist.png";
 
-interface Achievement {
+export interface Achievement {
+  effect: string
   date: string;
   description: string;
 }
@@ -28,7 +29,7 @@ export interface Education {
 
 export const Educations: Education[] = [
   {
-    name: "Educacion",
+    name: "Educación",
     avatar: Akihiko,
     alt: "Imagen para educacion",
     color: "bg-gray-500/90",
@@ -40,8 +41,9 @@ export const Educations: Education[] = [
         image: Fist,
         achievement: {
           date: "2026",
+          effect: "Maestría base",
           description:
-            "Finalice mi carrera en el Instituto Tecnologico Superior de Fresnillo (ITSF)",
+            "Finalice mi carrera en el Instituto Tecnologico Superior de Fresnillo (ITSF) +10 ATK y +5 ACC",
         },
       },
     ],
@@ -59,7 +61,8 @@ export const Educations: Education[] = [
         image: Rapier,
         achievement: {
           date: "Junio 2026",
-          description: "DataCamp",
+          effect: "Entornos portables",
+          description: "DataCamp recupera 5 EN al inicio de cada turno",
         },
       },
       {
@@ -69,7 +72,8 @@ export const Educations: Education[] = [
         image: Rapier,
         achievement: {
           date: "Junio 2026",
-          description: "DataCamp",
+          effect: "Automatización",
+          description: "DataCamp 20% de probabilidad de atacar dos veces",
         },
       },
       {
@@ -79,7 +83,8 @@ export const Educations: Education[] = [
         image: Rapier,
         achievement: {
           date: "Octubre 2025",
-          description: "Santander Open Academy",
+          effect: "Optimiza comandos",
+          description: "Santander Open Academy +15% de daño en técnicas",
         },
       },
     ],
