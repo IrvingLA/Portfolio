@@ -1,0 +1,28 @@
+---
+import Layout from "../shared/components/Layout.astro";
+import VideoBg from "../shared/components/VideoBg.astro";
+
+import Experience from "../experience/assets/video/compressed.mp4";
+import Mobile from "../experience/assets/video/mobile.mp4";
+
+import "../shared/styles/global.css";
+---
+
+<Layout>
+    <VideoBg
+        src={Experience}
+        mobileSrc={Mobile}
+        loopStart={0}
+        loopEnd={16}
+        overlay={true}
+        class="object-center"
+    />
+</Layout>
+<a
+    href="/"
+    data-hover-sound
+    class="fixed top-4 left-4 z-40 font-anton uppercase text-primary-800
+    hover:text-primary-950 transition-colors text-lg"
+>
+    Menú
+</a>
