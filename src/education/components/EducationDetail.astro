@@ -94,6 +94,9 @@ const { item, id } = Astro.props;
                 data-weapon-name={weapon.name}
                 data-weapon-atk={weapon.atk}
                 data-weapon-acc={weapon.acc}
+                data-weapon-effect={weapon.achievement.effect}
+                data-weapon-date={weapon.achievement.date}
+                data-weapon-description={weapon.achievement.description}
             >
                 <div class="flex col-span-5 items-center">
                     <Image
@@ -129,11 +132,17 @@ const { item, id } = Astro.props;
         const name = row.dataset.weaponName;
         const atk = row.dataset.weaponAtk;
         const acc = row.dataset.weaponAcc;
+        const effect = row.dataset.weaponEffect;
+        const date = row.dataset.weaponDate;
+        const description = row.dataset.weaponDescription;
 
         const weapon = detail.querySelector("[data-current-weapon]");
         const curName = detail.querySelector("[data-current-name]");
         const curAtk = detail.querySelector("[data-current-atk]");
         const curAcc = detail.querySelector("[data-current-acc]");
+        const descEffect = detail.querySelector("[data-achievement-effect]");
+        const descDate = detail.querySelector("[data-achievement-date]");
+        const descDesc = detail.querySelector("[data-achievement-description]");
 
         if (weapon) {
             weapon.src = img;
@@ -142,6 +151,9 @@ const { item, id } = Astro.props;
         if (curName) curName.textContent = name;
         if (curAtk) curAtk.textContent = atk;
         if (curAcc) curAcc.textContent = acc;
+        if (descEffect) descEffect.textContent = effect;
+        if (descDate) descDate.textContent = date;
+        if (descDesc) descDesc.textContent = description;
 
         new Audio("/sounds/open-modal.mp3").play().catch(() => {});
     });

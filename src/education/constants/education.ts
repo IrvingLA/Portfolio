@@ -43,7 +43,7 @@ export const Educations: Education[] = [
           date: "2026",
           effect: "Maestría base",
           description:
-            "Finalice mi carrera en el Instituto Tecnologico Superior de Fresnillo (ITSF) +10 ATK y +5 ACC",
+            "Instituto Tecnologico Superior de Fresnillo (ITSF) +10 ATK y +5 ACC",
         },
       },
     ],
