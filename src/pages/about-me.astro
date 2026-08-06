@@ -13,6 +13,15 @@ import { section } from "../about-me/constants/sections.data";
 ---
 
 <Layout>
+    <a
+        href="#main"
+        data-hover-sound
+        class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4
+               focus:z-50 focus:bg-black focus:text-primary-400 focus:px-6
+               focus:py-2 font-anton uppercase"
+    >
+        Saltar al contenido
+    </a>
     <VideoBg
         src={menuVideo}
         mobileSrc={menuMobileVideo}
@@ -22,7 +31,7 @@ import { section } from "../about-me/constants/sections.data";
         class="object-left sm:object-center"
     />
 
-    <main class="flex items-center h-full">
+    <main id="main" tabindex="-1" class="flex items-center h-full">
         <h1 class="sr-only" id="page-heading">Sobre mí</h1>
         <section aria-labelledby="page-heading">
             <ul class="space-y-1">
@@ -58,6 +67,7 @@ import { section } from "../about-me/constants/sections.data";
         const dialog = document.getElementById(trigger.dataset.dialogId);
         if (!dialog) return;
         new Audio("/sounds/open-modal.mp3").play().catch(() => {});
+        trigger.setAttribute("aria-expanded", "true");
         dialog.showModal();
         const shine = dialog.querySelector("[data-shine]");
         if (shine) {
@@ -80,6 +90,10 @@ import { section } from "../about-me/constants/sections.data";
             new Audio("/sounds/hide-modal.mp3").play().catch(() => {});
             const shine = dialog.querySelector("[data-shine]");
             if (shine) shine.classList.remove("crystal-shine");
+            const trigger = document.querySelector(
+                `button[data-dialog-id="${dialog.id}"]`,
+            );
+            if (trigger) trigger.setAttribute("aria-expanded", "false");
         },
         true,
     );

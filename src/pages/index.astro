@@ -12,6 +12,15 @@ import menuMobileVideo from "../navigation/assets/video/menu-mobile.mp4";
 ---
 
 <Layout>
+    <a
+        href="#main"
+        data-hover-sound
+        class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4
+               focus:z-50 focus:bg-black focus:text-primary-400 focus:px-6
+               focus:py-2 font-anton uppercase"
+    >
+        Saltar al contenido
+    </a>
     <VideoBg
         src={menuVideo}
         mobileSrc={menuMobileVideo}
@@ -21,7 +30,7 @@ import menuMobileVideo from "../navigation/assets/video/menu-mobile.mp4";
         class="object-left lg:object-center"
     />
     <h1 class="sr-only">Portafolio</h1>
-    <main class="container mx-auto flex h-screen">
+    <main id="main" tabindex="-1" class="container mx-auto flex h-screen">
         <nav
             class="nav-menu flex flex-col font-anton uppercase opacity-0
             ml-[15%] lg:ml-[calc(50%-2rem)]

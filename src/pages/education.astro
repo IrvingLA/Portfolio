@@ -14,6 +14,15 @@ import { Educations } from "../education/constants/education";
 ---
 
 <Layout>
+    <a
+        href="#main"
+        data-hover-sound
+        class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4
+               focus:z-50 focus:bg-black focus:text-primary-400 focus:px-6
+               focus:py-2 font-anton uppercase"
+    >
+        Saltar al contenido
+    </a>
     <VideoBg
         src={Education}
         mobileSrc={Mobile}
@@ -23,7 +32,7 @@ import { Educations } from "../education/constants/education";
         class="object-center"
     />
 
-    <main class="flex items-center h-full">
+    <main id="main" tabindex="-1" class="flex items-center h-full">
         <h1 class="sr-only" id="page-heading">Educación</h1>
         <section id="education-list" aria-labelledby="page-heading">
             <ul class="space-y-1">
@@ -64,9 +73,11 @@ import { Educations } from "../education/constants/education";
         const volver = document.getElementById("btn-volver");
         let openId = null;
         let closing = false;
+        let refocusOnClose = false;
 
-        const closeDetail = (detail, id) => {
+        const closeDetail = (detail, id, refocus = true) => {
             closing = true;
+            refocusOnClose = refocus;
             detail.classList.remove("p3r-slide-in");
             detail.classList.add("p3r-slide-out");
             detail.addEventListener("animationend", () => {
@@ -78,6 +89,7 @@ import { Educations } from "../education/constants/education";
                 closing = false;
                 const btn = document.querySelector(`[data-edu-id="${id}"] button`);
                 if (btn) btn.setAttribute("aria-expanded", "false");
+                if (refocusOnClose && btn) btn.focus();
                 new Audio("/sounds/hide-modal.mp3").play().catch(() => {});
             }, { once: true });
         };
@@ -100,19 +112,16 @@ import { Educations } from "../education/constants/education";
                 openId = id;
                 trigger.setAttribute("aria-expanded", "true");
                 new Audio("/sounds/open-modal.mp3").play().catch(() => {});
+                detail.addEventListener("animationend", () => {
+                    volver.focus();
+                }, { once: true });
             };
 
             if (openId !== null && openId !== id) {
-                closing = true;
                 const prev = document.querySelector(`[data-edu-detail="${openId}"]`);
                 if (prev) {
-                    prev.classList.remove("p3r-slide-in");
-                    prev.classList.add("p3r-slide-out");
+                    closeDetail(prev, openId, false);
                     prev.addEventListener("animationend", () => {
-                        prev.classList.add("hidden");
-                        prev.classList.remove("p3r-slide-out");
-                        openId = null;
-                        closing = false;
                         openDetail();
                     }, { once: true });
                     return;
@@ -135,6 +144,15 @@ import { Educations } from "../education/constants/education";
             if (!id || openId !== id) return;
 
             closeDetail(trigger, id);
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key !== "Escape") return;
+            if (!openId || closing) return;
+            const detail = document.querySelector(`[data-edu-detail="${openId}"]`);
+            if (!detail) return;
+            e.preventDefault();
+            closeDetail(detail, openId);
         });
 
         volver.addEventListener("click", () => {
