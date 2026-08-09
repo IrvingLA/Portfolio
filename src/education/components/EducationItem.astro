@@ -21,6 +21,7 @@ const { item, id } = Astro.props;
     <button
         type="button"
         aria-expanded="false"
+        aria-controls={id}
         class="bg-black text-white font-sora w-fit
             flex items-center px-16 space-x-2
             hover:bg-neutral-50 hover:text-black hover:ps-24

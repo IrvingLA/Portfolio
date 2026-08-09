@@ -13,6 +13,15 @@ import "../shared/styles/global.css";
 ---
 
 <Layout>
+    <a
+        href="#main"
+        data-hover-sound
+        class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4
+               focus:z-50 focus:bg-black focus:text-primary-400 focus:px-6
+               focus:py-2 font-anton uppercase"
+    >
+        Saltar al contenido
+    </a>
     <VideoBg
         src={Experience}
         mobileSrc={Mobile}
@@ -22,11 +31,14 @@ import "../shared/styles/global.css";
         class="object-center"
     />
 
-    <section class="flex items-center justify-center w-full h-full overflow-y-auto">
-        <ol class="space-y-1 py-16">
-            {jobs.map((job, i) => <ExperienceItem i={i + 1} job={job} />)}
-        </ol>
-    </section>
+    <main id="main" tabindex="-1" class="flex items-center justify-center w-full h-full overflow-y-auto">
+        <h1 class="sr-only" id="page-heading">Experiencia</h1>
+        <section aria-labelledby="page-heading">
+            <ol class="space-y-1 py-16">
+                {jobs.map((job, i) => <ExperienceItem i={i + 1} job={job} />)}
+            </ol>
+        </section>
+    </main>
 
     <a
         href="/"

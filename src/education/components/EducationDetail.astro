@@ -18,9 +18,10 @@ const { item, id } = Astro.props;
 
 <div
     class="w-full md:w-3/4 hidden"
+    id={id}
     data-edu-detail={id}
     role="region"
-    aria-label={item.name}
+    aria-labelledby={`${id}-heading`}
     tabindex="-1"
 >
     <div
@@ -38,13 +39,13 @@ const { item, id } = Astro.props;
                 >
                 </div>
             </div>
-            <span
+            <div
                 class="bg-white font-jetbrains font-bold text-lg -translate-x-28
                         w-56 h-16 flex items-center justify-center"
                 style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 25% 100%, 0 40%);"
             >
-                <h3>{item.name}</h3>
-            </span>
+                <h2 id={`${id}-heading`}>{item.name}</h2>
+            </div>
         </div>
         <div
             class="w-full h-10 bg-black ps-12
@@ -60,23 +61,25 @@ const { item, id } = Astro.props;
                     class="h-4 w-10"
                     data-current-weapon
                 />
-                <h4 data-current-name>{item.weapons[0].name}</h4>
+                <h3 data-current-name>{item.weapons[0].name}</h3>
             </div>
             <div class="-translate-y-4">
                 <Image
                     src={Attack}
-                    alt="attack"
+                    alt=""
+                    aria-hidden="true"
                     class="-translate-x-4 translate-y-1 h-5 w-auto"
                 />
-                <p data-current-atk>{item.weapons[0].atk}</p>
+                <span data-current-atk>{item.weapons[0].atk}</span>
             </div>
             <div class="-translate-y-4">
                 <Image
                     src={Accuracy}
-                    alt="accuracy"
+                    alt=""
+                    aria-hidden="true"
                     class="-translate-x-5 translate-y-1 h-5 w-auto"
                 />
-                <p data-current-acc>{item.weapons[0].acc}</p>
+                <span data-current-acc>{item.weapons[0].acc}</span>
             </div>
         </div>
     </div>
@@ -111,9 +114,9 @@ const { item, id } = Astro.props;
                     />
                     <span>{weapon.name}</span>
                 </span>
-                <p>{weapon.atk}</p>
-                <p>{weapon.acc}</p>
-                <span class="bg-black text-white w-16 text-center rounded-2xl flex justify-evenly font-normal text-sm items-center">
+                <span>{weapon.atk}</span>
+                <span>{weapon.acc}</span>
+                <span class="bg-black text-white w-16 text-center rounded-2xl flex justify-evenly font-normal text-sm items-center" aria-hidden="true">
                     <span>x</span>
                     <span>1</span>
                 </span>
