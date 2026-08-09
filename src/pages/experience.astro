@@ -5,6 +5,10 @@ import VideoBg from "../shared/components/VideoBg.astro";
 import Experience from "../experience/assets/video/compressed.mp4";
 import Mobile from "../experience/assets/video/mobile.mp4";
 
+import ExperienceItem from "../experience/components/ExperienceItem.astro";
+
+import { jobs } from "../experience/constants/jobs";
+
 import "../shared/styles/global.css";
 ---
 
@@ -17,12 +21,19 @@ import "../shared/styles/global.css";
         overlay={true}
         class="object-center"
     />
+
+    <section class="flex items-center justify-center w-full h-full">
+        <ol class="space-y-4">
+            {jobs.map((job, i) => <ExperienceItem i={i + 1} job={job} />)}
+        </ol>
+    </section>
+
+    <a
+        href="/"
+        data-hover-sound
+        class="fixed top-4 left-4 z-40 font-anton uppercase text-primary-800
+        hover:text-primary-950 transition-colors text-lg"
+    >
+        Menú
+    </a>
 </Layout>
-<a
-    href="/"
-    data-hover-sound
-    class="fixed top-4 left-4 z-40 font-anton uppercase text-primary-800
-    hover:text-primary-950 transition-colors text-lg"
->
-    Menú
-</a>
