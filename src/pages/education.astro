@@ -36,7 +36,11 @@ import { Educations } from "../education/constants/education";
         <h1 class="sr-only" id="page-heading">Educación</h1>
         <section id="education-list" aria-labelledby="page-heading">
             <ul class="space-y-1">
-                {Educations.map((item, i) => <EducationItem item={item} id={`edu-${i}`} />)}
+                {
+                    Educations.map((item, i) => (
+                        <EducationItem item={item} id={`edu-${i}`} />
+                    ))
+                }
             </ul>
         </section>
         <!-- Education section -->
@@ -69,66 +73,102 @@ import { Educations } from "../education/constants/education";
 
 <script>
     (() => {
-        const section = document.getElementById("education-list");
-        const volver = document.getElementById("btn-volver");
-        let openId = null;
-        let closing = false;
-        let refocusOnClose = false;
+        // Estado compartido en un objeto (no variables sueltas) para poder
+        // resetearlo en cada navegación de View Transitions sin tener que
+        // volver a registrar los listeners de document (que solo se
+        // adjuntan UNA vez, aquí abajo).
+        const state = { openId: null, closing: false };
+
+        // Astro View Transitions no recarga la página al navegar entre
+        // rutas: el DOM se reemplaza pero este <script> de module solo se
+        // ejecuta una vez. Sin este reset, "openId"/"closing" quedarían
+        // con el valor de la visita anterior y bloquearían los clicks al
+        // volver a Educación. astro:page-load se dispara tanto en la
+        // carga inicial como en cada navegación client-side.
+        document.addEventListener("astro:page-load", () => {
+            state.openId = null;
+            state.closing = false;
+        });
 
         const closeDetail = (detail, id, refocus = true) => {
-            closing = true;
-            refocusOnClose = refocus;
+            const section = document.getElementById("education-list");
+            const volver = document.getElementById("btn-volver");
+            if (!section || !volver) return;
+
+            state.closing = true;
             detail.classList.remove("p3r-slide-in");
             detail.classList.add("p3r-slide-out");
-            detail.addEventListener("animationend", () => {
-                detail.classList.add("hidden");
-                detail.classList.remove("p3r-slide-out");
-                section.classList.remove("hidden");
-                volver.classList.add("hidden");
-                openId = null;
-                closing = false;
-                const btn = document.querySelector(`[data-edu-id="${id}"] button`);
-                if (btn) btn.setAttribute("aria-expanded", "false");
-                if (refocusOnClose && btn) btn.focus();
-                new Audio("/sounds/hide-modal.mp3").play().catch(() => {});
-            }, { once: true });
+            detail.addEventListener(
+                "animationend",
+                () => {
+                    detail.classList.add("hidden");
+                    detail.classList.remove("p3r-slide-out");
+                    section.classList.remove("hidden");
+                    volver.classList.add("hidden");
+                    state.openId = null;
+                    state.closing = false;
+                    const btn = document.querySelector(
+                        `[data-edu-id="${id}"] button`,
+                    );
+                    if (btn) btn.setAttribute("aria-expanded", "false");
+                    if (refocus && btn) btn.focus();
+                    new Audio("/sounds/hide-modal.mp3").play().catch(() => {});
+                },
+                { once: true },
+            );
         };
 
         document.addEventListener("click", (e) => {
             const trigger = e.target.closest("[data-edu-id] button");
             if (!trigger) return;
-            if (closing) return;
+            if (state.closing) return;
+
+            const section = document.getElementById("education-list");
+            const volver = document.getElementById("btn-volver");
+            if (!section || !volver) return;
 
             const id = trigger.closest("[data-edu-id]").dataset.eduId;
 
             const openDetail = () => {
-                const detail = document.querySelector(`[data-edu-detail="${id}"]`);
+                const detail = document.querySelector(
+                    `[data-edu-detail="${id}"]`,
+                );
                 if (!detail) return;
                 section.classList.add("hidden");
                 detail.classList.remove("hidden", "p3r-slide-out");
                 void detail.offsetWidth;
                 detail.classList.add("p3r-slide-in");
                 volver.classList.remove("hidden");
-                openId = id;
+                state.openId = id;
                 trigger.setAttribute("aria-expanded", "true");
                 new Audio("/sounds/open-modal.mp3").play().catch(() => {});
-                detail.addEventListener("animationend", () => {
-                    volver.focus();
-                }, { once: true });
+                detail.addEventListener(
+                    "animationend",
+                    () => {
+                        volver.focus();
+                    },
+                    { once: true },
+                );
             };
 
-            if (openId !== null && openId !== id) {
-                const prev = document.querySelector(`[data-edu-detail="${openId}"]`);
+            if (state.openId !== null && state.openId !== id) {
+                const prev = document.querySelector(
+                    `[data-edu-detail="${state.openId}"]`,
+                );
                 if (prev) {
-                    closeDetail(prev, openId, false);
-                    prev.addEventListener("animationend", () => {
-                        openDetail();
-                    }, { once: true });
+                    closeDetail(prev, state.openId, false);
+                    prev.addEventListener(
+                        "animationend",
+                        () => {
+                            openDetail();
+                        },
+                        { once: true },
+                    );
                     return;
                 }
             }
 
-            if (openId === id) return;
+            if (state.openId === id) return;
 
             openDetail();
         });
@@ -136,30 +176,36 @@ import { Educations } from "../education/constants/education";
         document.addEventListener("click", (e) => {
             const trigger = e.target.closest("[data-edu-detail]");
             if (!trigger) return;
-            if (closing) return;
+            if (state.closing) return;
 
             if (e.target.closest("[data-weapon-img]")) return;
 
             const id = trigger.dataset.eduDetail;
-            if (!id || openId !== id) return;
+            if (!id || state.openId !== id) return;
 
             closeDetail(trigger, id);
         });
 
         document.addEventListener("keydown", (e) => {
             if (e.key !== "Escape") return;
-            if (!openId || closing) return;
-            const detail = document.querySelector(`[data-edu-detail="${openId}"]`);
+            if (!state.openId || state.closing) return;
+            const detail = document.querySelector(
+                `[data-edu-detail="${state.openId}"]`,
+            );
             if (!detail) return;
             e.preventDefault();
-            closeDetail(detail, openId);
+            closeDetail(detail, state.openId);
         });
 
-        volver.addEventListener("click", () => {
-            if (!openId || closing) return;
-            const detail = document.querySelector(`[data-edu-detail="${openId}"]`);
+        document.addEventListener("click", (e) => {
+            const volver = e.target.closest("#btn-volver");
+            if (!volver) return;
+            if (!state.openId || state.closing) return;
+            const detail = document.querySelector(
+                `[data-edu-detail="${state.openId}"]`,
+            );
             if (!detail) return;
-            closeDetail(detail, openId);
+            closeDetail(detail, state.openId);
         });
     })();
 </script>
