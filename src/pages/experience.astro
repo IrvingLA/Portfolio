@@ -22,8 +22,8 @@ import "../shared/styles/global.css";
         class="object-center"
     />
 
-    <section class="flex items-center justify-center w-full h-full">
-        <ol class="space-y-1">
+    <section class="flex items-center justify-center w-full h-full overflow-y-auto">
+        <ol class="space-y-1 py-16">
             {jobs.map((job, i) => <ExperienceItem i={i + 1} job={job} />)}
         </ol>
     </section>
