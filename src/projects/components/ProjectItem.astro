@@ -1,14 +1,24 @@
 ---
 import type { Project } from "../constants/projects";
-const { project } = Astro.props;
+
+interface Props {
+    project: Project;
+    id: string;
+}
+
+const { project, id } = Astro.props;
 ---
 
 <div
-    class="group px-4 py-2
-            bg-secondary-800 hover:bg-white
-            text-cyan-400 hover:text-black
-            transition-all duration-300 ease-out
-            hover:shadow-[4px_-4px_0_0_theme(colors.tertiary.500)]"
+    data-hover-sound
+    data-project-id={id}
+    role="button"
+    tabindex="0"
+    class="cursor-pointer group px-4 py-2 max-w-96
+        bg-secondary-800 hover:bg-white
+        text-cyan-400 hover:text-black
+        transition-all duration-300 ease-out
+        hover:shadow-[4px_-4px_0_0_theme(colors.tertiary.500)]"
 >
     <div class="-skew-x-6 flex justify-between">
         <div class="flex relative isolate">

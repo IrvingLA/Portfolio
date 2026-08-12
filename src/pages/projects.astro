@@ -6,6 +6,7 @@ import Background from "../projects/assets/video/compressed.mp4";
 import Mobile from "../projects/assets/video/mobile.mp4";
 
 import ProjectItem from "../projects/components/ProjectItem.astro";
+import ProjectDescription from "../projects/components/ProjectDescription.astro";
 import { projects } from "../projects/constants/projects";
 
 import "../shared/styles/global.css";
@@ -21,9 +22,189 @@ import "../shared/styles/global.css";
         class="object-center"
     />
     <main class="container mx-auto flex flex-col justify-center h-dvh ps-4">
-        <p class="font-anton uppercase text-4xl text-white">lists</p>
-        <div class="skew-x-6 text-white flex flex-col space-y-1">
-            {projects.map((project) => <ProjectItem project={project} />)}
-        </div>
+        <section id="projects-list" aria-labelledby="page-heading">
+            <h1 class="sr-only" id="page-heading">Proyectos</h1>
+            <p class="font-anton uppercase text-4xl text-white">lists</p>
+            <div class="skew-x-6 text-white flex flex-col space-y-1">
+                {projects.map((project, i) => (
+                    <ProjectItem project={project} id={`project-${i}`} />
+                ))}
+            </div>
+        </section>
+        {projects.map((project, i) => (
+            <div
+                id={`project-${i}`}
+                data-project-detail={`project-${i}`}
+                class="hidden"
+                role="region"
+                aria-labelledby={`${`project-${i}`}-heading`}
+                tabindex="-1"
+            >
+                <ProjectDescription project={project} />
+            </div>
+        ))}
     </main>
+    <a
+        href="/"
+        data-hover-sound
+        class="fixed top-4 left-4 z-40 font-anton uppercase text-primary-800
+            hover:text-primary-950 transition-colors text-lg"
+    >
+        Menú
+    </a>
+    <button
+        id="btn-volver"
+        data-hover-sound
+        class="fixed top-4 right-4 z-40 hidden font-anton uppercase text-primary-800
+            hover:text-primary-950 transition-colors text-lg cursor-pointer"
+        aria-label="Volver"
+    >
+        Volver
+    </button>
 </Layout>
+
+<script>
+    (() => {
+        const state = { openId: null, closing: false };
+
+        document.addEventListener("astro:page-load", () => {
+            state.openId = null;
+            state.closing = false;
+        });
+
+        const closeDetail = (detail, id, refocus = true) => {
+            const section = document.getElementById("projects-list");
+            const volver = document.getElementById("btn-volver");
+            if (!section || !volver) return;
+
+            state.closing = true;
+            detail.classList.remove("p3r-slide-in");
+            detail.classList.add("p3r-slide-out");
+            detail.addEventListener(
+                "animationend",
+                () => {
+                    detail.classList.add("hidden");
+                    detail.classList.remove("p3r-slide-out");
+                    section.classList.remove("hidden");
+                    volver.classList.add("hidden");
+                    state.openId = null;
+                    state.closing = false;
+                    const item = document.querySelector(
+                        `[data-project-id="${id}"]`,
+                    );
+                    if (item) item.setAttribute("aria-expanded", "false");
+                    if (refocus && item) item.focus();
+                    new Audio("/sounds/hide-modal.mp3").play().catch(() => {});
+                },
+                { once: true },
+            );
+        };
+
+        const openDetail = (id, trigger) => {
+            const section = document.getElementById("projects-list");
+            const volver = document.getElementById("btn-volver");
+            const detail = document.querySelector(
+                `[data-project-detail="${id}"]`,
+            );
+            if (!section || !volver || !detail) return;
+
+            section.classList.add("hidden");
+            detail.classList.remove("hidden", "p3r-slide-out");
+            void detail.offsetWidth;
+            detail.classList.add("p3r-slide-in");
+            volver.classList.remove("hidden");
+            state.openId = id;
+            if (trigger) trigger.setAttribute("aria-expanded", "true");
+            new Audio("/sounds/open-modal.mp3").play().catch(() => {});
+
+            const card = detail.querySelector("[data-flip-card]");
+            if (card) {
+                card.classList.remove("animate-flip");
+                void card.offsetWidth;
+                card.classList.add("animate-flip");
+            }
+
+            detail.addEventListener(
+                "animationend",
+                () => {
+                    detail.focus();
+                },
+                { once: true },
+            );
+        };
+
+        document.addEventListener("click", (e) => {
+            const trigger = e.target.closest("[data-project-id]");
+            if (!trigger) return;
+            if (state.closing) return;
+
+            const id = trigger.dataset.projectId;
+
+            if (state.openId !== null && state.openId !== id) {
+                const prev = document.querySelector(
+                    `[data-project-detail="${state.openId}"]`,
+                );
+                if (prev) {
+                    closeDetail(prev, state.openId, false);
+                    prev.addEventListener(
+                        "animationend",
+                        () => {
+                            openDetail(id, trigger);
+                        },
+                        { once: true },
+                    );
+                    return;
+                }
+            }
+
+            if (state.openId === id) return;
+
+            openDetail(id, trigger);
+        });
+
+        document.addEventListener("keydown", (e) => {
+            const trigger = e.target.closest("[data-project-id]");
+            if (!trigger) return;
+            if (e.key !== "Enter" && e.key !== " ") return;
+            e.preventDefault();
+            if (state.closing) return;
+            const id = trigger.dataset.projectId;
+            if (state.openId !== null) return;
+            openDetail(id, trigger);
+        });
+
+        document.addEventListener("click", (e) => {
+            const detail = e.target.closest("[data-project-detail]");
+            if (!detail) return;
+            if (state.closing) return;
+            if (e.target.closest("[data-project-link]")) return;
+
+            const id = detail.dataset.projectDetail;
+            if (!id || state.openId !== id) return;
+
+            closeDetail(detail, id);
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key !== "Escape") return;
+            if (!state.openId || state.closing) return;
+            const detail = document.querySelector(
+                `[data-project-detail="${state.openId}"]`,
+            );
+            if (!detail) return;
+            e.preventDefault();
+            closeDetail(detail, state.openId);
+        });
+
+        document.addEventListener("click", (e) => {
+            const volver = e.target.closest("#btn-volver");
+            if (!volver) return;
+            if (!state.openId || state.closing) return;
+            const detail = document.querySelector(
+                `[data-project-detail="${state.openId}"]`,
+            );
+            if (!detail) return;
+            closeDetail(detail, state.openId);
+        });
+    })();
+</script>

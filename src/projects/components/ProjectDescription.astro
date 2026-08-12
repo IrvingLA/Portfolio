@@ -1,0 +1,164 @@
+---
+import type { Project } from "../constants/projects";
+
+interface Props {
+    project: Project;
+}
+
+const { project } = Astro.props;
+
+import Star from "../assets/icons/Star.astro";
+import { Image } from "astro:assets";
+import Back from "../assets/cards/back.webp";
+
+const stars = Array.from({ length: 10 }, (_, i) => i);
+---
+
+<div class="space-y-4">
+    <div class="bg-secondary-700/90 w-fit px-4 -skew-x-6">
+        <div class="w-80 px-1 pt-1 bg-white">
+            <div
+                class="w-full h-12 bg-black
+            font-sora font-bold text-white capitalize
+            flex items-end justify-center"
+            >
+                <p class="skew-x-6 pb-1">
+                    {project.title}
+                </p>
+            </div>
+            <small
+                class="uppercase text-white font-bold bg-black -rotate-15 absolute
+            translate-x-3 -translate-y-5 ps-2 pt-4 pe-9 text-[10px]"
+                style="clip-path: polygon(0 20%, 0 100%, 100% 100%);"
+            >
+                Arcana
+            </small>
+            <div class="flex justify-evenly">
+                <div>
+                    <div class="py-2 flex justify-evenly items-center">
+                        <p class="font-jetbrains font-bold text-2xl">
+                            {project.card}
+                        </p>
+                        <small class="uppercase font-bold">rank</small>
+                    </div>
+                    <div class="flex justify-center gap-1">
+                        {
+                            stars.map((i) => (
+                                <Star
+                                    class={`size-4 ${
+                                        i < project.rank
+                                            ? "fill-current text-black"
+                                            : "text-black"
+                                    }`}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+                <p class="font-anton font-bold text-8xl -translate-y-3">
+                    {project.rank}
+                </p>
+            </div>
+        </div>
+        <p class="text-white font-sora font-bold ms-5">{project.description}</p>
+    </div>
+    <div class="flex justify-center">
+        <div class="group relative w-24 h-40 rotate-12">
+            <div class="absolute inset-0 [perspective:1000px]">
+                <div
+                    data-flip-card
+                    class="relative w-full h-full [transform-style:preserve-3d]"
+                >
+                    <Image
+                        src={project.imgCard}
+                        alt=""
+                        class="absolute inset-0 w-full h-full object-cover
+                        [backface-visibility:hidden]"
+                    />
+                    <Image
+                        src={Back}
+                        alt=""
+                        class="absolute inset-0 w-full h-full object-cover
+                        [backface-visibility:hidden] [transform:rotateY(180deg)]"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col justify-center items-end -skew-x-3">
+        <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-project-link
+            class="block hover:scale-105 transition-transform ease-in"
+        >
+            <Image
+                src={project.imgWeb}
+                alt="Imagen de la web"
+                class="w-72 h-auto"
+            />
+        </a>
+        <div>
+            <div class="relative flex">
+                <h2
+                    class="font-sora font-bold text-primary-400 text-2xl z-10 translate-y-4"
+                >
+                    Tecnologias
+                </h2>
+                <div
+                    class="absolute w-40 h-16 bg-secondary-500 z-0 rotate-12"
+                    style="clip-path: polygon(0 50%, 100% 0, 100% 100%);"
+                >
+                </div>
+            </div>
+            <div
+                class="grid grid-cols-4 gap-2 bg-secondary-900/80 max-w-72 pt-8 p-4 w-72"
+            >
+                {
+                    project.techs.map((tech) => (
+                        <div
+                            data-hover-sound
+                            class="tech-card flex flex-col items-center p-2 rounded-md
+                                hover:scale-125 transition-transform ease-in-out duration-300"
+                            data-category={tech.category}
+                        >
+                            <Image
+                                src={tech.image}
+                                alt={tech.name}
+                                class="size-8"
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function spinOnce() {
+        const card = document.querySelector("[data-flip-card]");
+        if (!card) return;
+        card.classList.add("animate-flip");
+        card.addEventListener(
+            "animationend",
+            () => card.classList.remove("animate-flip"),
+            { once: true },
+        );
+    }
+    document.addEventListener("astro:page-load", spinOnce);
+</script>
+<style>
+    .tech-card[data-category="frontend"]:hover {
+        background-color: #4f2553;
+    }
+    .tech-card[data-category="backend"]:hover {
+        background-color: #9c4061;
+    }
+    .tech-card[data-category="db"]:hover {
+        background-color: #da6e5e;
+    }
+    .tech-card[data-category="tools"]:hover {
+        background-color: #fbae59;
+    }
+</style>
