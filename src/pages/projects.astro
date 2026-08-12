@@ -1,0 +1,29 @@
+---
+import Layout from "../shared/components/Layout.astro";
+
+import VideoBg from "../shared/components/VideoBg.astro";
+import Background from "../projects/assets/video/compressed.mp4";
+import Mobile from "../projects/assets/video/mobile.mp4";
+
+import ProjectItem from "../projects/components/ProjectItem.astro";
+import { projects } from "../projects/constants/projects";
+
+import "../shared/styles/global.css";
+---
+
+<Layout>
+    <VideoBg
+        src={Background}
+        mobileSrc={Mobile}
+        loopStart={0}
+        loopEnd={15}
+        overlay={true}
+        class="object-center"
+    />
+    <main class="container mx-auto flex flex-col justify-center h-dvh ps-4">
+        <p class="font-anton uppercase text-4xl text-white">lists</p>
+        <div class="skew-x-6 text-white flex flex-col space-y-1">
+            {projects.map((project) => <ProjectItem project={project} />)}
+        </div>
+    </main>
+</Layout>
